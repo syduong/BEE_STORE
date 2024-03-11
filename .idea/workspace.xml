@@ -5,90 +5,116 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="decf23c0-62c4-4ee5-9414-667af264ed85" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/application/TheSneakerHouseApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/controller/ProductController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/DotGiamGia.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/GioHang.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/GioHangChiTiet.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/HinhAnh.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/HoaDon.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/HoaDonChiTiet.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/KhachHang.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/KichCo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/MauSac.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/NhanVien.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/SanPham.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/SanPhamChiTiet.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/TheLoai.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/ThuongHieu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/entity/Voucher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/RolesKhachHang.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/RolesNhanVien.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusDotGiamGia.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusGioHang.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusHinhAnh.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusHoaDon.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusKhachHang.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusKichCo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusMauSac.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusNhanVien.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusSanPham.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusTheLoai.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusThuongHieu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/enums/StatusVoucher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/IDotGiamGiaRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/IGioHangChiTietRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/IGioHangRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/IHinhAnhRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/IHoaDonChiTietRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/IHoaDonRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/IKhachHangRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/IKichCoRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/IMauSacRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/INhanVienRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/ISanPhamChiTietRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/ISanPhamRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/ITheLoaiRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/IThuongHieuRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/repository/IVoucherRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/IDotGiamGiaSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/IGioHangChiTietSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/IGioHangSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/IHinhAnhSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/IHoaDonChiTietSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/IHoaDonSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/IKhachHangSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/IKichCoSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/IMauSacSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/INhanVienSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/ISanPhamChiTietSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/ISanPhamSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/ITheLoaiSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/IThuongHieuSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/IVoucherSer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/DotGiamGiaSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/GioHangChiTietSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/GioHangSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/HinhAnhSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/HoaDonChiTietSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/HoaDonSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/KhachHangSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/KichCoSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/MauSacSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/NhanVienSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/SanPhamChiTietSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/SanPhamSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/TheLoaiSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/ThuongHieuSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tsh/sd43/service/impl/VoucherSerImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/tsh/sd43/TheSneakerHouseApplicationTests.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/TheSneakerHouseApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/BillDetailRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/BrandRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/ColorRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/CustomerRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/DotGiamGiaRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/EmployeeRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/ImageRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/ProductDetailRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/ProductRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/SizeRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/TypeRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/controller/VoucherController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/ChucVu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/DotGiamGia.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/GioHang.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/GioHangChiTiet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/HinhAnh.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/HoaDon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/HoaDonChiTiet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/KhachHang.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/KichCo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/MauSac.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/NhanVien.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/SanPham.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/SanPhamChiTiet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/TheLoai.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/ThuongHieu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/Voucher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/base/PrimaryEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/request/BrandAddRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/request/CustomerAddRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/request/EmployeeAddRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/request/ImageAddRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/request/ProductAddRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/request/ProductDetailAddRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/request/ProductDetailRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/request/ProductVoucherUpdateRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/request/SaleAddRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/request/VoucherAddRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/entity/responce/ProductResponce.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/RolesKhachHang.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/RolesNhanVien.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusDotGiamGia.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusGioHang.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusHinhAnh.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusHoaDon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusKhachHang.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusKichCo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusMauSac.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusNhanVien.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusSanPham.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusTheLoai.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusThuongHieu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/enums/StatusVoucher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/infrastructure/configs/cloudinary/CloudinaryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/infrastructure/configs/cloudinary/CloudinaryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/infrastructure/configs/cloudinary/ConfigCloudinary.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/infrastructure/listener/PrimaryEntityListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/IChucVuRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/IDotGiamGiaRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/IGioHangChiTietRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/IGioHangRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/IHinhAnhRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/IHoaDonChiTietRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/IKhachHangRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/IKichCoRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/IMauSacRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/INhanVienRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/ISanPhamChiTietRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/ISanPhamRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/ITheLoaiRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/IThuongHieuRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/repository/IVoucherRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/IDotGiamGiaSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/IGioHangChiTietSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/IGioHangSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/IHinhAnhSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/IHoaDonChiTietSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/IHoaDonSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/IKhachHangSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/IKichCoSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/IMauSacSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/INhanVienSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/ISanPhamChiTietSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/ISanPhamSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/ITheLoaiSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/IThuongHieuSer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/DotGiamGiaSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/GioHangChiTietSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/GioHangSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/HinhAnhSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/HoaDonChiTietSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/KhachHangSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/KichCoSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/MauSacSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/NhanVienSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/SanPhamChiTietSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/SanPhamSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/TheLoaiSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/ThuongHieuSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/java/com/tsh/sd43/service/impl/VoucherSerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back_end/src/test/java/com/tsh/sd43/TheSneakerHouseApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +123,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -122,9 +151,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.TheSneakerHouseApplication.executor": "Run",
-    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/hoang/Documents/TheSneakerHouse/back_end",
+    "last_opened_file_path": "C:/Users/hoang/Documents/Job_1/BEE_STORE/back_end",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",

@@ -27,7 +27,13 @@ public interface IVoucherRepo extends JpaRepository<Voucher, Long> {
     ArrayList<Voucher> findVoucherByIdAndState(@Param("id") Long id);
 
     @Query(value = """
-        select top 1 ma from voucher order by ma desc
+        select top 1 ma from voucher order by ngay_tao desc
     """, nativeQuery = true)
     String generateNewestCode();
+
+    @Query(value = """
+        select * from Voucher v
+        where ma like :key
+    """, nativeQuery = true)
+    ArrayList<Voucher> getVouchersByKey(@Param("key") String key);
 }

@@ -315,141 +315,522 @@
                     </div>
 
                     <!-- form -->
-                    <div style="margin-bottom: 15px;" >
-                        <label for="exampleInputEmail1" class="form-label">Tên phiếu giảm giá <sup
+                    <div style="margin-bottom: 15px;">
+                        <label for="exampleInputEmail1" class="form-label">Tên sản phẩm: <sup
                                 style="color: #fa0000a8;">*</sup></label>
-                        
+
                         <input placeholder="Nhập tên sản phẩm...." style="height: 40px;" type="text"
-                            class="form-control" ng-model="voucher.name" id="exampleInputEmail1"
+                            class="form-control" ng-model="product.ten" id="exampleInputEmail1"
                             aria-describedby="emailHelp">
                     </div>
 
-                    <div  style="margin-bottom: 15px;" >
-                        <label for="exampleInputEmail1" class="form-label">Mô tả <sup
+                    <div style="margin-bottom: 15px;">
+                        <label for="exampleInputEmail1" class="form-label">Mô tả: <sup
                                 style="color: #fa0000a8;">*</sup></label>
-                        
-                        <textarea placeholder="Nhập mô tả...."  type="text"
-                            class="form-control" 
-                            ng-model="voucher.name" 
-                            id="exampleInputEmail1"
-                            rows="5"
-                            aria-describedby="emailHelp"></textarea>
+
+                        <textarea placeholder="Nhập mô tả...." type="text" class="form-control" ng-model="product.moTa"
+                            id="exampleInputEmail1" rows="5" aria-describedby="emailHelp"></textarea>
                     </div>
 
                     <div style="display: flex;justify-content: space-between;align-items: center;margin-top: 10px;">
                         <div style="width: 48%;">
-                            <label for="exampleInputEmail1" class="form-label">Thương hiệu <sup style="color: #fa0000a8;">*</sup></label>
+                            <label for="exampleInputEmail1" class="form-label">Thương hiệu : <sup
+                                    style="color: #fa0000a8;">*</sup></label>
                             <div class="select-wrap"
-                                 style="display: flex; justify-content: space-between; align-items: center;"
-                            >
-                              <select class="form-select" 
-                                      style="width: 88%;"
-                                      id="city" 
-                                      name="city" 
-                                      onchange="angular.element(this).scope().getAllDistrict()"
-                                      placeholder="Chọn trạng thái">
-                                      <option>-- Chọn thương hiệu ---</option>
-                              </select>
-                              <button class="btn btn-primary" style="width: 10%;height: 40px;">
-                                <i class="ti ti-plus" style="
-                                                            display: inline-block;
-                                                            font-size: 25px;
-                                                            transform: translate(-8px, -1px);
-                                                        "></i>
-                              </button>
-                          </div> 
+                                style="display: flex; justify-content: space-between; align-items: center;">
+                                <select class="form-select" style="width: 88%;" id="city" name="city"
+                                    ng-model="product.idThuongHieu" placeholder="Chọn trạng thái">
+                                    <option value="" selected> -- Chọn thương hiệu --</option>
+                                    <option ng-repeat="brand in brands" value="{{brand.id}}">{{brand.ten}}</option>
+                                </select>
+                                <button class="btn btn-outline-primary" style="width: 40px;height: 40px;">
+                                    <i class="ti ti-plus" data-bs-toggle="modal" data-bs-target="#brandAddProductModal"
+                                        style="
+                                                display: inline-block;
+                                                font-size: 25px;
+                                                transform: translate(-9px, -1px);
+                                            "></i>
+                                </button>
+                            </div>
                         </div>
-          
+
                         <div style="width: 48%;">
-                            <label for="exampleInputEmail1" class="form-label">Thể loại <sup style="color: #fa0000a8;">*</sup></label>
+                            <label for="exampleInputEmail1" class="form-label">Thể loại: <sup
+                                    style="color: #fa0000a8;">*</sup></label>
                             <div class="select-wrap"
-                                 style="display: flex; justify-content: space-between; align-items: center;"
-                            >
-                              <select class="form-select" 
-                                      style="width: 88%;"
-                                      id="city" 
-                                      name="city" 
-                                      onchange="angular.element(this).scope().getAllDistrict()"
-                                      placeholder="Chọn trạng thái">
-                                      <option>-- Chọn thể loại ---</option>
-                              </select>
-                              <button class="btn btn-primary" style="width: 10%;height: 40px;">
-                                <i class="ti ti-plus" style="
+                                style="display: flex; justify-content: space-between; align-items: center;">
+                                <select class="form-select" style="width: 88%;" id="city" name="city"
+                                    ng-model="product.idTheLoai" placeholder="Chọn trạng thái">
+                                    <option value="" selected> -- Chọn thể loại --</option>
+                                    <option ng-repeat="type in types" value="{{type.id}}">{{type.ten}}</option>
+                                </select>
+                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#typeAddProductModal" style="width: 40px;height: 40px;">
+                                    <i class="ti ti-plus" style="
                                                             display: inline-block;
                                                             font-size: 25px;
-                                                            transform: translate(-8px, -1px);
+                                                            transform: translate(-9px, -1px);
                                                         "></i>
-                              </button>
-                          </div> 
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <div style="display: flex;justify-content: space-between;align-items: center;margin-top: 10px;">
-                        <div style="width: 48%;">
-                            <label for="exampleInputEmail1" class="form-label">Kích cỡ <sup style="color: #fa0000a8;">*</sup></label>
-                            <div class="select-wrap"
-                                 style="display: flex; justify-content: space-between; align-items: center;"
-                            >
-                              <select class="form-select" 
-                                      style="width: 88%;height: 40px;"
-                                      name="city" 
-                                      id="choices-multiple-size"
-                                      multiple
-                                      onchange="angular.element(this).scope().getAllDistrict()"
-                                      placeholder="Chọn trạng thái">
-                                      <option value="45"> 45 </option>
-                                      <option value="40"> 40 </option>
-                                      <option value="45"> 45 </option>
-                              </select>
-                              <button class="btn btn-primary" style="width: 10%;height: 40px;">
-                                <i class="ti ti-plus" style="
-                                                            display: inline-block;
-                                                            font-size: 25px;
-                                                            transform: translate(-8px, -1px);
-                                                        "></i>
-                              </button>
-                          </div> 
+                    <div class="card text-center" style="margin-top: 25px;">
+                        <div class="card-header">
+                            Chọn kích cỡ và màu sắc
                         </div>
-          
-                        <div style="width: 48%;">
-                            <label for="exampleInputEmail1" class="form-label">Màu sắc <sup style="color: #fa0000a8;">*</sup></label>
-                            <div class="select-wrap"
-                                 style="display: flex; justify-content: space-between; align-items: center;"
-                            >
-                              <select class="form-select" 
-                                      style="width: 88%;"
-                                      id="city" 
-                                      name="city" 
-                                      onchange="angular.element(this).scope().getAllDistrict()"
-                                      placeholder="Chọn trạng thái">
-                                      <option> Đen </option>
-                                      <option> Nâu </option>
-                                      <option> Ghi </option>
-                              </select>
-                              <button class="btn btn-primary" style="width: 10%;height: 40px;">
-                                <i class="ti ti-plus" style="
-                                                            display: inline-block;
-                                                            font-size: 25px;
-                                                            transform: translate(-8px, -1px);
-                                                        "></i>
-                              </button>
-                          </div> 
+                        <div class="card-body">
+                            <div style="text-align: left;">
+                                <label style="width: 100px; " for="exampleInputEmail1" class="form-label">Kích cỡ:
+                                    <sup style="color: #fa0000a8;">*</sup>
+                                </label>
+
+                                <div style="width: 87%; display: inline-block; ">
+
+                                    <span ng-repeat="size in listChooseSize">
+                                        <button class="btn btn-outline-muted"
+                                            style="height: 40px;margin-right: 5px;margin-bottom:10px; position: relative;">
+                                            {{size}}
+                                            <i class="ti ti-x" style="
+                                                font-size: 12px;
+                                                position: absolute;
+                                                top: -8px;
+                                                right: -7px;
+                                                background: #d11a2a;
+                                                color: white;
+                                                border-radius: 50%;
+                                                padding: 4px;" ng-click="removeChooseSize(size)"></i>
+                                        </button>
+                                    </span>
+
+                                    <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                        data-bs-target="#sizeListProductModal" ng-click="buttonChooseSize()"
+                                        style="width: 40px;height: 40px; margin-bottom: 10px;">
+                                        <i class="ti ti-plus" style="
+                                                                display: inline-block;
+                                                                font-size: 25px;
+                                                                transform: translate(-9px, -1px);
+                                                                
+                                                            "></i>
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <div style="text-align: left; margin-top: 20px;">
+                                <label style="width: 100px;" for="exampleInputEmail1" class="form-label">Màu sắc:<sup
+                                        style="color: #fa0000a8;">*</sup> </label>
+
+                                <span ng-repeat="color in listChooseColor">
+                                    <button class="btn btn-outline-muted"
+                                        style="height: 40px;margin-right: 5px;margin-bottom:10px; position: relative;">
+                                        {{color.ten}}
+                                        <i class="ti ti-x" style="
+                                           font-size: 12px;
+                                           position: absolute;
+                                           top: -8px;
+                                           right: -7px;
+                                           background: #d11a2a;
+                                           color: white;
+                                           border-radius: 50%;
+                                           padding: 4px;" ng-click="removeChooseColor(color)"></i>
+                                    </button>
+                                </span>
+
+                                <button class="btn btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#colorListProductModal" ng-click="buttonChooseColor()"
+                                    style="width: 40px;height: 40px;margin-bottom: 10px;">
+                                    <i class="ti ti-plus" style="
+                                                                display: inline-block;
+                                                                font-size: 25px;
+                                                                transform: translate(-9px, -1px);
+                                                            "></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
+
+                    <span ng-repeat="color in listChooseColor">
+                        <div class="card text-center" id="modal-product-detail-color-{{color.id}}"
+                            style="margin-top: 25px;">
+                            <div class="card-header">
+                                Cập nhật chi tiết sản phẩm màu
+                                {{color.ten}}
+
+                            </div>
+                            <div class="card-body">
+
+                                <div class="table-responsive">
+                                    <table class="table ">
+                                        <thead class="text-dark fs-4" style="background-color: rgb(218 212 212 / 24%);
+                                                  
+                                            ">
+                                            <tr>
+                                                <th style="width: 10%; ">
+                                                    <h6 class="fw-semibold mb-0"
+                                                        style="border-right: 1px solid #b1acac;">#
+                                                    </h6>
+                                                </th>
+                                                <th class="border-bottom-0" style="width: 25%;">
+                                                    <h6 class="fw-semibold mb-0"
+                                                        style="border-right: 1px solid #b1acac;">
+                                                        Tên sản phẩm</h6>
+                                                </th>
+                                                <th class="border-bottom-0" style="width: 15%;">
+                                                    <h6 class="fw-semibold mb-0"
+                                                        style="border-right: 1px solid #b1acac;">Số
+                                                        lượng</h6>
+                                                </th>
+                                                <th class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-0"
+                                                        style="border-right: 1px solid #b1acac;">
+                                                        Giá
+                                                        bán</h6>
+                                                </th>
+                                                <th class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-0"
+                                                        style="border-right: 1px solid #b1acac;">
+                                                        Hành động</h6>
+                                                </th>
+                                                <th class="border-bottom-0" style="width: 20%;">
+                                                    <h6 class="fw-semibold mb-0">
+                                                        Upload ảnh</h6>
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="size in listChooseSize" id="color-size-{{color.id}}-{{size}}"
+                                                class="listProductDetail">
+                                                <td class="border-bottom-0">
+                                                    <h6 class="fw-semibold mb-0">{{$index + 1}} </h6>
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    {{product.ten}}
+                                                    <span style="display: inline-block;color: black;">
+                                                        [{{size}} - {{color.ten}}]
+                                                    </span>
+
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    <input type="number" id="quantity-{{color.id}}-{{size}}" class="form-control" ng-keyup="changeQuantity(color,size)">
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    <input type="number" id="price-{{color.id}}-{{size}}" class="form-control" ng-keyup="changePrice(color, size)">
+                                                </td>
+                                                <td class="border-bottom-0">
+                                                    <i class="ti ti-trash-x-filled"
+                                                        ng-click="removeChooseByColorAndSize(color.id, size)" style="    
+                                                   font-size: 23px;
+                                                   color: #d11a2a;"></i>
+                                                </td>
+                                                <td class="border-bottom-0" rowspan="{{listChooseSize.length}}"
+                                                    ng-if="$index == 0">
+                                                    <div id="image-{{color.id}}-{{size}}" style="
+                                                        display: flex;
+                                                        justify-content: space-around;
+                                                        flex-wrap: wrap;">
+
+
+                                                    </div>
+
+                                                    <h6 class="fw-semibold mb-0 fs-4" style="position: relative;">
+                                                        <a>
+                                                            <i style="
+                                                            display: inline-block;
+                                                            font-size: 23px;  
+                                                            color: #d4d42e;" class="ti ti-photo-plus"></i>
+                                                        </a>
+                                                        <input type="file" multiple accept="image/*" style="position: absolute;
+                                                        top: 1px;
+                                                        left: 24px;
+                                                        width: 37%;
+                                                        opacity: 0;" ng-click="getColorSelected(color, size)"
+                                                            onchange="angular.element(this).scope().changeImage(this)" />
+                                                    </h6>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </span>
 
                     <div style="margin-top: 15px; float: right;">
-                        <button type="submit" class="btn btn-primary" ng-click="addVoucher()">
+                        <button type="submit" class="btn btn-primary" ng-click="addProduct()">
                             <i class="ti ti-plus" style="
                               display: inline-block;
                               font-size: 18px;
                               transform: translateY(2px);
                           "></i>
-                            Thêm phiếu giảm giá</button>
+                          
+                            Thêm sản phẩm</button>
                     </div>
 
                 </div>
             </div>
         </div>
 
+        <!-- list color modal -->
+        <div class="modal fade" id="colorListProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">Chọn màu sắc</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <button class="btn btn-outline-muted" data-bs-toggle="modal"
+                                data-bs-target="#colorAddProductModal" ng-click="addColor()"
+                                style=" display: block; margin-bottom: 10px;  margin-left: 317px;">
+                                <i class="ti ti-circle-plus" style="
+                                    display: inline-block;
+                                    font-size: 18px;
+                                    transform: translateY(2px);
+                                "></i>
+                                Thêm màu sắc</button>
+
+                        </div>
+                        <div style="display: block; margin-top: 20px;clear: all">
+                            <button ng-repeat="color in colors" class="btn btn-outline-primary btn-list-color"
+                                id="color-{{color.id}}" ng-click="chooseColor(color.id)"
+                                style=" margin-bottom: 10px; display: inline-block;margin-right: 5px;margin-bottom:10px;">
+                                {{color.ten}}</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            <i class="ti ti-x" style="
+                                                    display: inline-block;
+                                                    font-size: 18px;
+                                                    transform: translateY(2px);
+                                                "></i>
+                            Đóng</button>
+                        <button type="button" class="btn btn-warning" ng-click="chooseColorAddProduct()"
+                            style="margin-right: 15px;">
+                            <i class="ti ti-edit" style="
+                                        display: inline-block;
+                                        font-size: 18px;
+                                        transform: translateY(2px);
+                                    "></i>
+                            Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- list size modal -->
+        <div class="modal fade" id="sizeListProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">Chọn kích cỡ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <button class="btn btn-outline-muted" data-bs-toggle="modal"
+                                data-bs-target="#sizeAddProductModal"
+                                style=" display: block; margin-bottom: 10px;  margin-left: 317px;">
+                                <i class="ti ti-circle-plus" style="
+                                        display: inline-block;
+                                        font-size: 18px;
+                                        transform: translateY(2px);
+                                    "></i>
+                                Thêm kích cỡ</button>
+
+                        </div>
+                        <div style="display: block; margin-top: 20px;clear: all">
+                            <button ng-repeat="size in sizes" class="btn btn-outline-primary btn-list-size"
+                                ng-click="chooseSize(size.kichCo)" id="size-{{size.kichCo}}"
+                                style=" margin-bottom: 10px; display: inline-block;margin-right: 5px;margin-bottom:10px;">
+                                {{size.kichCo}}</button>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            <i class="ti ti-x" style="
+                                                        display: inline-block;
+                                                        font-size: 18px;
+                                                        transform: translateY(2px);
+                                                    "></i>
+                            Đóng</button>
+                        <button type="button" class="btn btn-warning" ng-click="chooseSizeAddProduct()"
+                            style="margin-right: 15px;">
+                            <i class="ti ti-edit" style="
+                                            display: inline-block;
+                                            font-size: 18px;
+                                            transform: translateY(2px);
+                                        "></i>
+                            Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- brand modal -->
+        <div class="modal fade" id="brandAddProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">Thêm thương hiệu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="exampleInputEmail1" class="form-label">Tên thương hiệu <sup
+                                style="color: #fa0000a8;">*</sup></label>
+                        <input placeholder="Nhập tên thương hiệu...." style="height: 40px;" type="text"
+                            class="form-control" ng-model="name_brand" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            <i class="ti ti-x" style="
+                                                     display: inline-block;
+                                                     font-size: 18px;
+                                                     transform: translateY(2px);
+                                                 "></i>
+                            Đóng</button>
+                        <button type="button" class="btn btn-primary" ng-click="addBrandAddProduct()"
+                            style="margin-right: 15px;">
+                            <i class="ti ti-plus" style="
+                                         display: inline-block;
+                                         font-size: 18px;
+                                         transform: translateY(2px);
+                                     "></i>
+                            Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- type modal -->
+        <div class="modal fade" id="typeAddProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">Thêm mới thể loại</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="exampleInputEmail1" class="form-label">Tên thể loại <sup
+                                style="color: #fa0000a8;">*</sup></label>
+                        <input placeholder="Nhập tên thể loại...." style="height: 40px;" type="text"
+                            class="form-control" ng-model="name_type" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            <i class="ti ti-x" style="
+                                                  display: inline-block;
+                                                  font-size: 18px;
+                                                  transform: translateY(2px);
+                                              "></i>
+                            Đóng</button>
+                        <button type="button" class="btn btn-info" ng-click="addTypeAddProduct()"
+                            style="margin-right: 15px;">
+                            <i class="ti ti-plus" style="
+                                      display: inline-block;
+                                      font-size: 18px;
+                                      transform: translateY(2px);
+                                  "></i>
+                            Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- color modal -->
+        <div class="modal fade" id="colorAddProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">Thêm mới màu sắc</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="exampleInputEmail1" class="form-label">Tên màu sắc <sup
+                                style="color: #fa0000a8;">*</sup></label>
+                        <input placeholder="Nhập tên màu sắc...." style="height: 40px;" type="text" class="form-control"
+                            ng-model="name_color" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            <i class="ti ti-x" style="
+                                               display: inline-block;
+                                               font-size: 18px;
+                                               transform: translateY(2px);
+                                           "></i>
+                            Đóng</button>
+                        <button type="button" class="btn btn-info" ng-click="addColorAddProduct()"
+                            style="margin-right: 15px;">
+                            <i class="ti ti-plus" style="
+                                   display: inline-block;
+                                   font-size: 18px;
+                                   transform: translateY(2px);
+                               "></i>
+                            Thêm màu sắc
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIZE modal -->
+        <div class="modal fade" id="sizeAddProductModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">Thêm mới kích thước</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="exampleInputEmail1" class="form-label">Kích thước <sup
+                                style="color: #fa0000a8;">*</sup></label>
+                        <input placeholder="Nhập kích thước...." style="height: 40px;" type="number"
+                            class="form-control" ng-model="newSize" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            <i class="ti ti-x" style="
+                                            display: inline-block;
+                                            font-size: 18px;
+                                            transform: translateY(2px);
+                                        "></i>
+                            Đóng</button>
+                        <button type="button" class="btn btn-info" ng-click="addSizeAddProduct()"
+                            style="margin-right: 15px;">
+                            <i class="ti ti-plus" style="
+                                display: inline-block;
+                                font-size: 18px;
+                                transform: translateY(2px);
+                            "></i>
+                            Thêm kích cỡ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
+
+

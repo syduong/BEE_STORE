@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public interface ITheLoaiRepo extends JpaRepository<TheLoai, Long> {
 
-
     @Query( value = """
         select * from the_loai v
         WHERE ten like :key
@@ -31,5 +30,7 @@ public interface ITheLoaiRepo extends JpaRepository<TheLoai, Long> {
         where v.ten = :ten 
     """, nativeQuery = true)
     ArrayList<TheLoai> findTypeByName(@Param("ten") String ten);
+
+    ArrayList<TheLoai> findByOrderByNgayTaoDesc();
 
 }

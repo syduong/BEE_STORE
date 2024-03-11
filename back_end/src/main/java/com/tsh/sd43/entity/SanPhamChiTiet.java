@@ -18,11 +18,14 @@ public class SanPhamChiTiet extends PrimaryEntity {
     @Column(name = "so_luong_ton")
     private Integer soLuongTon;
 
+    @Column(name = "don_gia")
+    private BigDecimal donGia;
+
+    @Column(name = "gia_tri_giam")
+    private BigDecimal giaTriGiam;
+
     @Column(name = "trong_luong")
     private Float trongLuong;
-
-    @Column(name = "mo_ta")
-    private String moTa;
 
     @Column(name = "trang_thai")
     private Boolean trangThai;
@@ -32,15 +35,15 @@ public class SanPhamChiTiet extends PrimaryEntity {
     private SanPham idSanPham;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_the_loai")
-    private TheLoai idTheLoai;
-
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_mau_sac")
     private MauSac idMauSac;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_kich_co")
     private KichCo idKichCo;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_dot_giam_gia")
+    private DotGiamGia idDotGiamGia;
 
 }

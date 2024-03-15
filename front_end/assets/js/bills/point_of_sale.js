@@ -51,25 +51,31 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
         if ($scope.bill.idKhachHang !== null) {
             $scope.bill.tenNguoiNhan = $scope.bill.idKhachHang.ten
             $scope.bill.sdtNguoiNhan = $scope.bill.idKhachHang.soDienThoai
+            $scope.bill.email = $scope.bill.idKhachHang.email
         }
         return $scope.bill
     }
 
     $scope.loadProductDetailByBillId = function (bill) {
-        $http.get('http://localhost:8080/bill-detail/get-by-bill?id=' + bill.id + '&page=' + ($scope.currentPageBillDetails - 1) + '&size=' + $scope.itemsPerPageBillDetails).then(function (response) {
-            $scope.billDetails = response.data
-            $scope.totalItemBillDetails = response.data.totalElements
-            $scope.totalPrice = 0
-            for (var i = 0; i < $scope.billDetails.content.length; i++) {
-                $scope.totalPrice += Number($scope.billDetails.content[i].idSanPhamChiTiet.donGia) * Number($scope.billDetails.content[i].soLuong)
-            }
-            $scope.totalAllPrice = $scope.totalPrice
-            if ($scope.bill.idVoucher != null) {
-                $scope.totalAllPrice = (100 - $scope.bill.idVoucher.phanTramGiam) * $scope.totalAllPrice / 100
-            }
-        }).catch(function (error) {
-            console.log(error)
-        })
+        $http.get('http://localhost:8080/bill-detail/get-by-bill?id=' + bill.id + '&page=' + ($scope.currentPageBillDetails - 1) + '&size=' + $scope.itemsPerPageBillDetails)
+            .then(function (response) {
+                $scope.billDetails = response.data
+                $scope.totalItemBillDetails = response.data.totalElements
+                $scope.totalPrice = 0
+                for (var i = 0; i < $scope.billDetails.content.length; i++) {
+                    if($scope.billDetails.content[i].idSanPhamChiTiet.idDotGiamGia == null){
+                        $scope.totalPrice += Number($scope.billDetails.content[i].idSanPhamChiTiet.donGia) * Number($scope.billDetails.content[i].soLuong)
+                    }else{
+                        $scope.totalPrice += Number( (100 - $scope.billDetails.content[i].idSanPhamChiTiet.idDotGiamGia.phanTramGiam) * $scope.billDetails.content[i].idSanPhamChiTiet.donGia /100) * Number($scope.billDetails.content[i].soLuong)
+                    }
+                }
+                $scope.totalAllPrice = $scope.totalPrice
+                if ($scope.bill.idVoucher != null) {
+                    $scope.totalAllPrice = (100 - $scope.bill.idVoucher.phanTramGiam) * $scope.totalAllPrice / 100
+                }
+            }).catch(function (error) {
+                console.log(error)
+            })
     }
 
     $scope.loadBills = function () {
@@ -96,6 +102,11 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
             $scope.voucher = response.data
             if ($scope.voucher === "") {
                 $scope.voucher = null;
+                var phiVanChuyen = $scope.bill.phiVanChuyen == null ? 0 : $scope.bill.phiVanChuyen
+                $scope.totalAllPrice = $scope.totalPrice + phiVanChuyen
+            } else {
+                var phiVanChuyen = $scope.bill.phiVanChuyen == null ? 0 : $scope.bill.phiVanChuyen
+                $scope.totalAllPrice = ((100 - $scope.voucher.phanTramGiam) * $scope.totalPrice / 100) + phiVanChuyen
             }
         }).catch(function (error) {
             console.log(error)
@@ -113,6 +124,10 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
         }).catch(function (error) {
             console.log(error)
         })
+
+        if ($scope.state == false) {
+            $scope.bill.phiVanChuyen = 0;
+        }
     }
 
     $scope.loadProductList = function () {
@@ -158,8 +173,6 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
                 })
             }
         });
-
-
     }
 
     $scope.pageChanged = function () {
@@ -172,7 +185,6 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
     $scope.pageChangedBillDetails = function () {
         $http.get('http://localhost:8080/bill-detail/get-by-bill?id=' + $scope.getActiveBill().id + '&page=' + ($scope.currentPageBillDetails - 1) + '&size=' + $scope.itemsPerPageBillDetails).then(function (response) {
             $scope.billDetails = response.data
-            console.log($scope.billDetails)
         }).catch(function (error) {
             console.log(error)
         })
@@ -252,12 +264,23 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
     }
 
     $scope.addProductToBillApi = function (productDetail, bill, quantity) {
+
         $http.post('http://localhost:8080/bill-detail/add-product-to-bill', {
             'hoaDon': bill,
             'sanPhamChiTiet': productDetail,
             'soLuong': quantity
         }).then(function (response) {
-            $scope.loadProductDetailByBillId(bill)
+            // check gia tri toi thieu voucher 
+            if ($scope.voucher !== null) {
+                if (quantity * productDetail.donGia < $scope.voucher.giaTriToiThieu) {
+                    $scope.removeVoucher();
+                    $scope.voucher = null;
+                }
+            }
+
+            setTimeout(function () {
+                $scope.loadProductDetailByBillId(bill)
+            }, 100)
         }).catch(function (error) {
             toastr.error(error.response.data);
         })
@@ -314,7 +337,6 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
     $scope.getVoucherByKey = function (key) {
         $http.get('http://localhost:8080/voucher/get-all?key=' + key).then(function (response) {
             $scope.vouchers = response.data
-            console.log($scope.vouchers)
         })
     }
 
@@ -331,6 +353,11 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
             return;
         }
 
+        if ($scope.voucher != null) {
+            toastr.error('Bạn chỉ có thể chọn một voucher.Vui lòng xóa voucher cũ và thêm lại.');
+            return;
+        }
+
         axios.put('http://localhost:8080/bill/add-voucher-to-bill', {
             'voucher': voucher,
             'hoaDon': $scope.getActiveBill()
@@ -344,20 +371,76 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
     }
 
     $scope.createNewBill = function () {
-        $scope.getActiveBill();
+        Swal.fire({
+            title: "Xác nhận thanh toán hóa đơn này?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Xác nhận",
+            cancelButtonText: "Hủy"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $scope.getActiveBill();
 
-        //create bill
-        $scope.bill.phuongThucThanhToan = $scope.paymentMethod
-        $scope.bill.tongTien = $scope.totalPrice
-        $scope.bill.tongTienSauGiam = $scope.totalAllPrice
-        $scope.bill.trangThai = 1
+                //create bill
+                $scope.bill.phuongThucThanhToan = $scope.paymentMethod
+                $scope.bill.tongTien = $scope.totalPrice
+                $scope.bill.tongTienSauGiam = $scope.totalAllPrice
+                $scope.bill.trangThai = 2
+                if ($scope.bill.loaiHoaDon == null) {
+                    $scope.bill.loaiHoaDon = 0;
+                }
 
-        axios.put('http://localhost:8080/bill/update-bill', $scope.bill).then(function (response) {
-            $scope.loadBills()
-            toastr.success("Tạo hóa đơn thành công.");
-        }).catch(function (response) {
-            $scope.loadBills()
-        })
+                if ($scope.bill.loaiHoaDon == 0) {
+                    $scope.bill.trangThai = 4;
+                }
+
+                axios.put('http://localhost:8080/bill/update-bill', $scope.bill).then(function (response) {
+                    $scope.loadBills()
+
+                    if($scope.bill.loaiHoaDon == 0){
+                        axios.post('http://localhost:8080/history/add', {
+                            'trangThai': 4,
+                            'ghiChu': $scope.bill.ghiChu,
+                            'hoaDon': response.data
+                        }).then(function (response) {
+                        }).catch(function (error) {
+                            console.log(error);
+                        })
+                    }else{
+                        axios.post('http://localhost:8080/history/add', {
+                            'trangThai': 1,
+                            'ghiChu': $scope.bill.ghiChu,
+                            'hoaDon': response.data
+                        }).then(function (response) {
+                           
+                        }).catch(function (error) {
+                            console.log(error);
+                        })
+                        axios.post('http://localhost:8080/history/add', {
+                            'trangThai': 2,
+                            'ghiChu': $scope.bill.ghiChu,
+                            'hoaDon': response.data
+                        }).then(function (response) {
+    
+                        }).catch(function (error) {
+                            console.log(error);
+                        })
+                    }
+                   
+                    toastr.success("Tạo hóa đơn thành công.");
+                    setTimeout(function () {
+                        location.href = "/html/router.html#!/chi-tiet-hoa-don/" + response.data.id
+                        window.scrollTo(0, 0);
+                    }, 200)
+                })
+                    .catch(function (response) {
+                        $scope.loadBills()
+                    })
+            }
+        });
+
     }
 
     $scope.removeVoucher = function () {
@@ -440,7 +523,6 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
         $scope.getActiveBill();
 
         $scope.bill.idKhachHang = null;
-        console.log($scope.bill)
         axios.put('http://localhost:8080/bill/update-bill', $scope.bill).then(function (response) {
             $scope.loadCustomer()
         }).catch(function (response) {
@@ -449,7 +531,6 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
     }
 
     $scope.getAllprovideByCode = function (district_code, ward_code, province_code) {
-        console.log(selectCityCustomer)
         // const thisOrder = document.getElementById(`hoaDon${orderId}`);
         fetch(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/province`, {
             method: "GET",
@@ -484,7 +565,6 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
 
     $scope.getAllDistrictByCode = function (ward_code, district_code, provinceCode) {
 
-        console.log(ward_code, district_code, provinceCode)
         axios
             .get(`https://dev-online-gateway.ghn.vn/shiip/public-api/master-data/district`, {
                 params: {
@@ -498,7 +578,6 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
             })
             .then((res) => {
                 const options = res.data.data;
-                console.log(options)
 
                 for (let i = 0; i < options.length; i++) {
                     const option = document.createElement("option");

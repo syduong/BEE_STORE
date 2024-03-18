@@ -44,12 +44,13 @@ public class SanPhamChiTietSerImpl implements ISanPhamChiTietSer {
         e.setSoLuongTon(req.getSoLuongTon());
         e.setIdKichCo(req.getIdKichCo());
         e.setIdMauSac(req.getIdMauSac());
+//        e.setQRcode(req.getQRcode());
 
         return sanPhamChiTietRepo.save(e);
     }
 
-    public TheLoai update(TheLoai req){
-        return null;
+    public SanPhamChiTiet update(SanPhamChiTiet req){
+        return sanPhamChiTietRepo.save(req);
     }
 
     public Page<SanPhamChiTiet> findAllAndPanigation(int pageNo, int pageSize){

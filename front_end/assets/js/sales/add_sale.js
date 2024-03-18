@@ -12,7 +12,7 @@ main_app.controller("addSaleController", function ($scope, $http) {
 
     // product details
     $scope.currentPageDetail = 1
-    $scope.itemsPerPageDetail = 10
+    $scope.itemsPerPageDetail = 50
     $scope.totalItemsDetail = 1
     $scope.productDetails = []
     $scope.productDetailChooses = []
@@ -157,7 +157,7 @@ main_app.controller("addSaleController", function ($scope, $http) {
 
     $scope.getAllImagesByIDProductDetail = function (id, text) {
         var textFist = `
-        <div id="carousel-${id}" class="carousel slide" data-bs-ride="carousel">
+        <div id="carousel-${id}" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-inner">
             
         `
@@ -183,13 +183,13 @@ main_app.controller("addSaleController", function ($scope, $http) {
             for (var i = 0; i < response.data.length; i++) {
                 if (i == 0) {
                     textCenter += `
-                        <div class="carousel-item active">
-                            <img src="${response.data[0].duongDan}" class="d-block w-100" alt="...">
+                        <div class="carousel-item active" data-bs-interval="100">
+                            <img src="${response.data[i].duongDan}" class="d-block w-100" alt="...">
                         </div>`
                 } else {
                     textCenter += `
                         <div class="carousel-item">
-                            <img src="${response.data[0].duongDan}" class="d-block w-100" alt="...">
+                            <img src="${response.data[i].duongDan}" class="d-block w-100" alt="...">
                         </div>`
                 }
 
@@ -215,6 +215,10 @@ main_app.controller("addSaleController", function ($scope, $http) {
         $scope.loadProductDetails()
     }
 
+    $scope.pageChangedPageDetail = function () {
+        $scope.loadProductDetails()
+    }
+
     $scope.loadProductDetails = async () => {
         await axios.post('http://localhost:8080/product-detail/get-product-detail-sale', $scope.key).then(
             function (response) {
@@ -232,7 +236,6 @@ main_app.controller("addSaleController", function ($scope, $http) {
                     $scope.productDetailChooses = $scope.productDetailChooses.filter(x => x.id != $scope.productDetailChooses[i].id)
                 } else {
                     var e = document.getElementById("product-detail-" + $scope.productDetailChooses[i].id)
-                    console.log(e.checked)
                     e.checked = true;
                 }
             }

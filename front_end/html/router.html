@@ -39,7 +39,10 @@
             font-size: 24px;
             font-weight: 900;
           ">
-            The Sneaker House
+            <img src="../assets/images/logos/logo.png"
+                 style="width: 51%;
+                 margin-left: 56px;"
+            />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -73,15 +76,6 @@
                   <i class="ti ti-receipt-2"></i>
                 </span>
                 <span class="hide-menu">Quản lí đơn hàng</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item" onclick="removeOption()">
-              <a class="sidebar-link" aria-expanded="false" href="#!hoa-don">
-                <span>
-                  <i class="ti ti-truck-return"></i>
-                </span>
-                <span class="hide-menu">Trả hàng</span>
               </a>
             </li>
 
@@ -308,6 +302,9 @@
   <!-- date picker -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+  <!-- QR code -->
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 
   <!-- file custom -->
   <script>

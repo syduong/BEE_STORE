@@ -1,4 +1,4 @@
-main_app.controller("editEmployeeController", function ($scope, $http, $routeParams) {
+main_app.controller("editEmployeeController", function ($scope, $http, $routeParams, $window) {
     var id = $routeParams.id
     var today = new Date();
     $scope.avatar = "";
@@ -30,6 +30,7 @@ main_app.controller("editEmployeeController", function ($scope, $http, $routePar
                 soDienThoai: resp.soDienThoai,
                 maTinh: resp.maTinh,
                 maPhuong: resp.maPhuong,
+                matKhau: resp.matKhau,
                 maXa: resp.maXa,
                 tinh: resp.tinh,
                 phuong: resp.phuong,
@@ -194,7 +195,6 @@ main_app.controller("editEmployeeController", function ($scope, $http, $routePar
                 defaultOption.value = -1; // Set the value as needed
                 defaultOption.textContent = "Chọn Tỉnh"; // Set the text content
                 // Set the 'disabled' and 'selected' attributes to make it the default option
-                defaultOption.disabled = true;
                 selectCityCustomer.appendChild(defaultOption);
                 const options = data.data;
                 for (let i = 0; i < options.length; i++) {
@@ -322,6 +322,7 @@ main_app.controller("editEmployeeController", function ($scope, $http, $routePar
         }).then((result) => {
             if (result.isConfirmed) {
 
+                console.log($scope.employee)
                 if ($scope.employee.ten === "" ||
                     $scope.employee.ngaySinh === ""
                     || $scope.employee.cccd === ""
@@ -332,6 +333,20 @@ main_app.controller("editEmployeeController", function ($scope, $http, $routePar
                     || $scope.employee.maPhuong === ""
                     || $scope.employee.maXa === ""
                     || $scope.employee.diaChi === "") {
+                    toastr.error('Bạn phải nhập đầy các trường có trên form ')
+                    return;
+                }
+
+                if ($scope.employee.ten === null ||
+                    $scope.employee.ngaySinh === null
+                    || $scope.employee.cccd === null
+                    || $scope.employee.gioiTinh === null
+                    || $scope.employee.email === null
+                    || $scope.employee.soDienThoai === null
+                    || $scope.employee.maTinh === null
+                    || $scope.employee.maPhuong === null
+                    || $scope.employee.maXa === null
+                    || $scope.employee.diaChi === null) {
                     toastr.error('Bạn phải nhập đầy các trường có trên form ')
                     return;
                 }
@@ -368,6 +383,7 @@ main_app.controller("editEmployeeController", function ($scope, $http, $routePar
 
                 setTimeout(() => {
                     location.href = "/html/router.html#!/nhan-vien"
+                    $window.location.reload();
                 }, 100)
 
             }

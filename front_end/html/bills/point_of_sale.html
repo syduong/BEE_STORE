@@ -5,7 +5,7 @@
       <i class="ti ti-home-2"></i> / <span style="color: black;display: inline-block;">Bán hàng tại quầy</span>
     </div>
     <div>
-      <button class="btn btn-primary btn-sm" ng-click="createOrderWait()" style="height: 40px;">
+      <button class="btn btn-primary btn-sm" ng-click="createOrderWait()" style="height: 40px;width: 156px;">
         <i class="ti ti-plus" style="
                               display: inline-block;
                               font-size: 18px;
@@ -46,7 +46,8 @@
             <span style="color: black;display: inline-block;">Giỏ hàng</span>
           </div>
           <div style="display: flex;justify-content: space-between;margin-right: 10px;">
-            <button class="btn btn-primary" style="margin-right: 10px;">
+            <button class="btn btn-primary" style="margin-right: 10px;" data-bs-toggle="modal"
+              data-bs-target="#qrCodeModal" ng-click="openModalQrCode()">
               <i class="ti ti-qrcode"></i>
               Quét QR Code
             </button>
@@ -459,7 +460,7 @@
               </button>
 
               <button style="width: 49%;font-size: 14px;" class="btn btn-outline-warning button-payment-method"
-                ng-click="choosePaymentMethod(1)" id="payment-1">
+                data-bs-target="#vietQrModal" ng-click="openModalVietQr()" data-bs-toggle="modal" id="payment-1">
                 <img style="   
                  width: 29%;
                 transform: translateY(-2px);" src="https://i.gyazo.com/566d62fd25cf0867e0033fb1b9b47927.png">
@@ -494,7 +495,7 @@
             <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 10px;">
               <button style="width: 100%;font-size: 16px;padding: 10px;" class="btn btn-info"
                 ng-click="createNewBill()">
-                <span style="display: inline-block;transform: translateY(-5px);">
+                <span style="display: block;transform: translateY(-5px);">
                   <i class="ti ti-plus" style="font-size: 30px; transform: translateY(4px);display: inline-block;"></i>
                   Tạo hóa đơn
                 </span>
@@ -529,13 +530,14 @@
           <span style="    
          position: relative;
          top: -45px;
+         left: 70px;
          font-size: 16px;">Hiện tại chưa có hóa đơn nào
 
           </span>
           <button style="    
-      position: relative;
-      top: -25px;
-      font-size: 16px;" class="btn btn-primary" ng-click="createOrderWait()">
+            position: relative;
+            left: -111px;
+            font-size: 16px;" class="btn btn-primary" ng-click="createOrderWait()">
             <i class="ti ti-plus"></i>
             Tạo hóa đơn
           </button>
@@ -717,7 +719,7 @@
                   right: 20px;
                   bottom: 32px;
                   " ng-click="addVoucherToBill(voucher)" ng-if="voucher.soLanDung != 0">Chọn</button>
-                  <button class="btn btn-danger" style="
+          <button class="btn btn-danger" style="
                   position: absolute;
                   right: 20px;
                   bottom: 32px;
@@ -816,6 +818,64 @@
             " max-size="3" ng-change="pageCustomerChanged()"></uib-pagination>
         </span>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- qr code modal -->
+<div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Quét Qr</h5>
+        <button type="button" ng-click="closeQrCodeModal()" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Đóng"></button>
+      </div>
+      <div class="modal-body">
+        <div class="section">
+          <div id="my-qr-reader">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal create vietQr -->
+<div class="modal fade" id="vietQrModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">qrcode</h5>
+        <button type="button" ng-click="closeQrCodeModal()" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Đóng"></button>
+      </div>
+
+      <!-- body -->
+      <div class="modal-body" style="padding: 0;">
+        <img src="{{vietQrUrl}}" style="
+         width: 78%;
+        margin-left: 62px;" alt="">
+      </div>
+
+      <!-- footer -->
+      <div class="modal-footer" style="display: flex;justify-content: space-evenly;">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          <i class="ti ti-x" style="
+                  display: inline-block;
+                  font-size: 18px;
+                  transform: translateY(2px);
+              "></i>
+          Đóng</button>
+        <button type="button" class="btn btn-success" ng-click="createNewBill()">
+          <i class="ti ti-checks" style="
+                          display: inline-block;
+                          font-size: 18px;
+                          transform: translateY(2px);
+                      "></i>
+          Thành công
+        </button>
       </div>
     </div>
   </div>

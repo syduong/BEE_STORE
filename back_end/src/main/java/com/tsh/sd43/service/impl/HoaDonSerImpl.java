@@ -4,10 +4,7 @@ import com.tsh.sd43.entity.HoaDon;
 import com.tsh.sd43.entity.KhachHang;
 import com.tsh.sd43.entity.Voucher;
 import com.tsh.sd43.entity.request.ProductVoucherUpdateRequest;
-import com.tsh.sd43.entity.responce.BillStateResponce;
-import com.tsh.sd43.entity.responce.ProductBestSellerResponce;
-import com.tsh.sd43.entity.responce.RevenueRangeDateResponce;
-import com.tsh.sd43.entity.responce.RevenueResponce;
+import com.tsh.sd43.entity.responce.*;
 import com.tsh.sd43.enums.StatusHoaDon;
 import com.tsh.sd43.repository.IHoaDonRepo;
 import com.tsh.sd43.service.IHoaDonChiTietSer;
@@ -98,10 +95,26 @@ public class HoaDonSerImpl implements IHoaDonChiTietSer {
         return hoaDonRepo.getBillPanigationByState(pageable, state);
     }
 
+    public Page<HoaDon> getBillAndPanigationByIdCustomer(Integer pageNo, Integer pageSize, Integer state, Long id) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        if(state == -1){
+            return hoaDonRepo.getAllBillPanigationAllByIdCustomer(pageable, id);
+        }
+        return hoaDonRepo.getBillPanigationByStateByIdCustomer(pageable, state, id);
+    }
+
     public HoaDon getBillById(Long id){
         HoaDon hoaDon =  hoaDonRepo.findById(id).get();
         if(hoaDon == null){
             throw new RuntimeException("Không tìm tấy hóa đơn này.");
+        }
+        return hoaDon;
+    }
+
+    public HoaDon getBillByCode(String code){
+        HoaDon hoaDon =  hoaDonRepo.getHoaDonByMa(code);
+        if(hoaDon == null){
+            throw new RuntimeException("Không tìm thấy hóa đơn hàng.");
         }
         return hoaDon;
     }
@@ -129,4 +142,49 @@ public class HoaDonSerImpl implements IHoaDonChiTietSer {
     public ArrayList<BillStateResponce> getBillState() {
         return hoaDonRepo.getBillState();
     }
+
+    public ArrayList<ProductBestSellerResponce> getTop5ProductBestSellerFillter(Integer state) {
+        try{
+            if(state == 0){
+                return hoaDonRepo.getTop5ProductBestSellerDay();
+            }else if(state == 1){
+                return hoaDonRepo.getTop5ProductBestSellerMonth();
+            }else if(state == 2){
+                return hoaDonRepo.getTop5ProductBestSellerYear();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<RevenueFillterResponce> getRevenueFillter(Integer state) {
+        try{
+            if(state == 0){
+                return hoaDonRepo.getRevenueRangeDay();
+            }else if(state == 1){
+                return hoaDonRepo.getRevenueRangeMonth();
+            }else if(state == 2){
+                return hoaDonRepo.getRevenueRangeYear();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<BillRevenueResponse> getQuantityBillByState(){
+        return hoaDonRepo.getQuantityBillByStates();
+    }
+
+    public ArrayList<BillRevenueResponse> getQuantityBillByStateAndIdCustomer(Long id){
+        return hoaDonRepo.getQuantityBillByStatesAndIDCustomer(id);
+    }
+
+    public HoaDon getNewBill(){
+        HoaDon bill = new HoaDon();
+        bill.setMa(generateCode());
+        return bill;
+    }
+
 }

@@ -20,11 +20,12 @@ public class ProductDetailRestController {
     @GetMapping("/find-all-panigation")
     public ResponseEntity<?> getVouchers(@RequestParam("page") Integer pageNo,
                                          @RequestParam("size") Integer pageSize,
-                                         @RequestParam("key") String key,
                                          @RequestParam("trang_thai") String trangThai,
-                                         @RequestParam("id") Long id) {
+                                         @RequestParam("id") Long id,
+                                         @RequestParam("idSize")String idSize,
+                                         @RequestParam("idColor")String idColor) {
         try {
-            return new ResponseEntity<>(sanPhamChiTietService.getProducts(pageNo, pageSize, key, id), HttpStatus.OK);
+            return new ResponseEntity<>(sanPhamChiTietService.getProducts(pageNo, pageSize, id, idSize, idColor), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -81,6 +82,33 @@ public class ProductDetailRestController {
     public ResponseEntity<?> updateVoucher(@RequestBody SanPhamChiTiet req){
         try{
             return new ResponseEntity<>(sanPhamChiTietService.update(req), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/get-product-newests")
+    public ResponseEntity<?> getProductNewests(){
+        try{
+            return new ResponseEntity<>(sanPhamChiTietService.getProductDetailNewest(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/get-top-product-best-seller")
+    public ResponseEntity<?> getTopProduct(){
+        try{
+            return new ResponseEntity<>(sanPhamChiTietService.getTopProductBestSeller(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+        @GetMapping("/get-color-identity/{id}")
+    public ResponseEntity<?> getColorIdentity(@PathVariable("id")Long id){
+        try{
+            return new ResponseEntity<>(sanPhamChiTietService.getProductDetailIdentity(id), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

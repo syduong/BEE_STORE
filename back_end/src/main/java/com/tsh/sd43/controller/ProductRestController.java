@@ -2,6 +2,7 @@ package com.tsh.sd43.controller;
 
 import com.tsh.sd43.entity.SanPhamChiTiet;
 import com.tsh.sd43.entity.request.ProductAddRequest;
+import com.tsh.sd43.entity.request.ProductUpdateRequest;
 import com.tsh.sd43.service.impl.SanPhamSerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,11 @@ public class ProductRestController {
     public ResponseEntity<?> getVouchers(@RequestParam("page")Integer pageNo,
                                          @RequestParam("size")Integer pageSize,
                                          @RequestParam("key")String key,
+                                         @RequestParam("id_type")String idType,
+                                         @RequestParam("id_brand")String idBrand,
                                          @RequestParam("trang_thai")String trangThai){
         try{
-            return new ResponseEntity<>(sanPhamService.getProducts(pageNo, pageSize, key), HttpStatus.OK);
+            return new ResponseEntity<>(sanPhamService.getProducts(pageNo, pageSize, key, idBrand, idType), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -50,6 +53,60 @@ public class ProductRestController {
     public ResponseEntity<?> getVoucherById(@PathVariable("id")Long id){
         try{
             return new ResponseEntity<>(sanPhamService.getById(id), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/get-max-don-gia")
+    public ResponseEntity<?> getMaxDonGia(){
+        try{
+            return new ResponseEntity<>(sanPhamService.getMaxDonGia(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateProduct(@RequestBody ProductUpdateRequest req){
+        try{
+            return new ResponseEntity<>(sanPhamService.updateProduct(req), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/get-quantity-of-product-by-brand")
+    public ResponseEntity<?> getQuantitysOfProductByBrand(){
+        try{
+            return new ResponseEntity<>(sanPhamService.getQuantitysByBrand(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/get-quantity-of-product-by-type")
+    public ResponseEntity<?> getQuantitysOfProductByType(){
+        try{
+            return new ResponseEntity<>(sanPhamService.getQuantitysByType(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/get-quantity-of-product-by-size")
+    public ResponseEntity<?> getQuantitysOfProductBySize(){
+        try{
+            return new ResponseEntity<>(sanPhamService.getQuantitysBySize(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/get-quantity-of-product-by-color")
+    public ResponseEntity<?> getQuantitysOfProductByColor(){
+        try{
+            return new ResponseEntity<>(sanPhamService.getQuantitysByColor(), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

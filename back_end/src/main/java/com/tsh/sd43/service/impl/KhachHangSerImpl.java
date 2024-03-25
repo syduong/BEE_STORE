@@ -2,6 +2,7 @@ package com.tsh.sd43.service.impl;
 
 import com.tsh.sd43.entity.KhachHang;
 import com.tsh.sd43.entity.request.CustomerAddRequest;
+import com.tsh.sd43.entity.request.CustomerRegisterRequest;
 import com.tsh.sd43.repository.IKhachHangRepo;
 import com.tsh.sd43.service.IKhachHangSer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,26 +40,30 @@ public class KhachHangSerImpl implements IKhachHangSer {
 
     public KhachHang addCustomer(CustomerAddRequest req){
         // add customer
-        KhachHang khachHang = new KhachHang();
+        if(khachHangRepo.findKhachHangByEmail(req.getEmail()) != null){
+            throw new RuntimeException("Email đã tồn tại");
+        }else {
+            KhachHang khachHang = new KhachHang();
 
-        khachHang.setMa(generateCode());
-        khachHang.setTen(req.getTen());
-        khachHang.setNgaySinh(req.getNgaySinh());
-        khachHang.setGioiTinh(req.getGioiTinh());
-        khachHang.setSoDienThoai(req.getSoDienThoai());
-        khachHang.setCccd(req.getCccd());
-        khachHang.setEmail(req.getEmail());
-        khachHang.setAvatar(req.getAvatar());
-        khachHang.setXa(req.getXa());
-        khachHang.setPhuong(req.getPhuong());
-        khachHang.setTinh(req.getTinh());
-        khachHang.setDiaChi(req.getDiaChi());
-        khachHang.setMaXa(req.getMaXa());
-        khachHang.setMaPhuong(req.getMaPhuong());
-        khachHang.setMaTinh(req.getMaTinh());
-        khachHang.setTrangThai(true);
+            khachHang.setMa(generateCode());
+            khachHang.setTen(req.getTen());
+            khachHang.setNgaySinh(req.getNgaySinh());
+            khachHang.setGioiTinh(req.getGioiTinh());
+            khachHang.setSoDienThoai(req.getSoDienThoai());
+            khachHang.setCccd(req.getCccd());
+            khachHang.setEmail(req.getEmail());
+            khachHang.setAvatar(req.getAvatar());
+            khachHang.setXa(req.getXa());
+            khachHang.setPhuong(req.getPhuong());
+            khachHang.setTinh(req.getTinh());
+            khachHang.setDiaChi(req.getDiaChi());
+            khachHang.setMaXa(req.getMaXa());
+            khachHang.setMaPhuong(req.getMaPhuong());
+            khachHang.setMaTinh(req.getMaTinh());
+            khachHang.setTrangThai(true);
 
-        return khachHangRepo.save(khachHang);
+            return khachHangRepo.save(khachHang);
+        }
     }
 
 
@@ -90,8 +96,35 @@ public class KhachHangSerImpl implements IKhachHangSer {
         customer.setXa(khachHang.getXa());
         customer.setTrangThai(khachHang.getTrangThai());
         customer.setNgayTao(khachHang.getNgayTao());
+        customer.setMatKhau(khachHang.getMatKhau());
 
         return khachHangRepo.save(customer);
+    }
+
+    public KhachHang register(CustomerRegisterRequest req){
+        if(khachHangRepo.findKhachHangByEmail(req.getEmail()) != null){
+            throw new RuntimeException("Email đã tồn tại");
+        }else {
+            KhachHang customer = new KhachHang();
+            customer.setTen(req.getTen());
+            customer.setEmail(req.getEmail());
+            customer.setMatKhau(req.getMatKhau());
+            customer.setTrangThai(true);
+            return khachHangRepo.save(customer);
+        }
+    }
+
+    public KhachHang login(String email, String matKhau){
+        KhachHang kh =  khachHangRepo.findKhachHangByEmailAndPass(email, matKhau);
+
+        if(kh == null){
+            throw new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
+        }
+        return kh;
+    }
+
+    public void changePass(String matKhau, String id){
+        khachHangRepo.changePass(matKhau, id);
     }
 
 }

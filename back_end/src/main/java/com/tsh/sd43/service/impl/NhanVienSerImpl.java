@@ -115,6 +115,7 @@ public class NhanVienSerImpl implements INhanVienSer {
         employee.setTen(req.getTen());
         employee.setAvatar(req.getAvatar());
         employee.setId(req.getId());
+        employee.setMatKhau(req.getMatKhau());
 
         if(req.getChucVu() == 0){
             if(chucVuRepo.findByMa("0") != null){
@@ -139,6 +140,34 @@ public class NhanVienSerImpl implements INhanVienSer {
         }
 
         return nhanVienRepo.save(employee);
+    }
+
+    public NhanVien login(String email, String matKhau){
+        NhanVien nv =  nhanVienRepo.findNhanVienByEmailAndPass(email, matKhau);
+
+        if(nv == null){
+            if(email.equals("admin@gmail.com") && matKhau.equals("admin")){
+                NhanVien employee = new NhanVien();
+                employee.setEmail("admin@gmail.com");
+                employee.setMatKhau("admin");
+                employee.setMa(generateCode());
+                employee.setTen("Admin");
+                employee.setTrangThai(true);
+                if(chucVuRepo.findByMa("1") != null){
+                    employee.setChucVu(chucVuRepo.findByMa("1"));
+                }else{
+                    ChucVu chucVu = new ChucVu();
+                    chucVu.setMa("1");
+                    chucVu.setTen("Quản trị viên");
+                    chucVuRepo.save(chucVu);
+                    employee.setChucVu(chucVu);
+                }
+                return nhanVienRepo.save(employee);
+            }else{
+                throw new RuntimeException("Tài khoản hoặc mật khẩu không đúng");
+            }
+        }
+        return nv;
     }
 
 }

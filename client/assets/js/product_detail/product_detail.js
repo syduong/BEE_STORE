@@ -264,7 +264,7 @@ clientApp.controller('singleProductController',
             if ($scope.cartDetails.length != 0) {
                 
                 if ($scope.quantity_of_cart + $scope.cartDetails[0].soLuong  > 6) {
-                    toastr.error("Bạn không thể đặt 6 sản phẩm")
+                    toastr.error("Bạn chỉ có thể đặt 6 sản phẩm")
                     return
                 }
 
@@ -273,13 +273,8 @@ clientApp.controller('singleProductController',
                     return
                 }
             } else {
-                if ($scope.quantity_of_cart > 3) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Xin lỗi vì sự bất tiện này!!",
-                        text: "Bạn không thể đặt hàng quá 3 sản phẩm. Vui lòng liên hệ 0968686868 biết thêm chi tiết.",
-                        footer: '<a href="#">Why do I have this issue?</a>'
-                    });
+                if ($scope.quantity_of_cart > 6) {
+                    toastr.error("Bạn chỉ có thể đặt 6 sản phẩm")
                     return
                 }
 
@@ -354,8 +349,8 @@ clientApp.controller('singleProductController',
         }
 
         $scope.changeQuantity = (cartDetail) => {
-            if(cartDetail.soLuong > 3){
-               cartDetail.soLuong = 3
+            if(cartDetail.soLuong > 6){
+               cartDetail.soLuong = 6
             }
 
             if(cartDetail.soLuong < 1){

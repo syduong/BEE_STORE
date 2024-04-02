@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Modernize Free</title>
+  <title>Login</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="../assets/css/styles.min.css" />
 </head>
@@ -26,7 +26,8 @@
                 color: #e3a51e;
                 font-weight: 700;
                 font-size: 21px;
-                margin-bottom: 16px;">The sneaker house</div>
+                margin-bottom: 16px;">
+                <img src="../assets/images/logos/logo.png" style="width: 40%;" alt=""></div>
                 <div class="mb-3">
                   <label for="exampleInputEmail1" class="form-label">Email</label>
                   <input type="email" class="form-control" id="email" id="exampleInputEmail1"
@@ -37,11 +38,11 @@
                   <input type="password" id="pass" class="form-control" id="exampleInputPassword1">
                 </div>
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                  <a class="text-primary fw-bold" href="./index.html" style="color: #e3a51e!important;">Quên mật khẩu
+                  <a class="text-primary fw-bold" href="./forget_pass.html" style="color: #22dd77!important;">Quên mật khẩu
                     ?</a>
                 </div>
                 <button onclick="login()" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2"
-                  style="background-color: #e3a51e; border: none">Đăng nhập</button>
+                  style="background-color: #22dd77; border: none">Đăng nhập</button>
 
               </div>
             </div>
@@ -67,8 +68,6 @@
     const login = () => {
       email = email.value
       pass = pass.value
-      console.log(email)
-      console.log(pass)
       if (email === "") {
         Swal.fire({
           icon: "error",
@@ -103,6 +102,8 @@
       }).catch((error) => {
         console.log(error)
       })
+
+
     }
   </script>
 </body>

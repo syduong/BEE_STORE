@@ -59,7 +59,10 @@ public class GioHangSerImpl implements IGioHangSer {
                 GioHangChiTiet cartDetail = new GioHangChiTiet();
                 cartDetail.setIdGioHang(cart);
                 cartDetail.setIdSanPhamChiTiet(req.getSanPhamChiTiet());
-                cartDetail.setSoLuong(1);
+                if(req.getSoLuong() > req.getSanPhamChiTiet().getSoLuongTon()) {
+                    throw new RuntimeException("Số lượng còn lại không đủ");
+                }
+                cartDetail.setSoLuong(cartDetail.getSoLuong() == -1 ? 1 : cartDetail.getSoLuong());
                 return gioHangChiTietRepo.save(cartDetail);
             }else{
                 for(GioHangChiTiet item : productDetails) {
@@ -103,8 +106,71 @@ public class GioHangSerImpl implements IGioHangSer {
         }
     }
 
+    public GioHangChiTiet addProductToCartPlusQuantity(CartDetailRequest req) {
+        GioHang cart = getCartByIdCustomer(req.getIdKhachHang());
+        try {
+            ArrayList<GioHangChiTiet> productDetails = gioHangChiTietRepo.findCartDetailsByIdCart(cart.getId());
+
+            if(productDetails.size() == 0) {
+                GioHangChiTiet cartDetail = new GioHangChiTiet();
+                cartDetail.setIdGioHang(cart);
+                cartDetail.setIdSanPhamChiTiet(req.getSanPhamChiTiet());
+                if(req.getSoLuong() > req.getSanPhamChiTiet().getSoLuongTon()) {
+                    throw new RuntimeException("Số lượng còn lại không đủ");
+                }
+                cartDetail.setSoLuong(req.getSoLuong() == -1 ? 1 : req.getSoLuong());
+                return gioHangChiTietRepo.save(cartDetail);
+            }else{
+                for(GioHangChiTiet item : productDetails) {
+                    if(item.getIdSanPhamChiTiet().getId().equals(req.getSanPhamChiTiet().getId())) {
+
+                        if(req.getSoLuong() == -1) {
+                            if(item.getSoLuong() + 1 > req.getSanPhamChiTiet().getSoLuongTon()) {
+                                throw new RuntimeException("Số lượng còn lại không đủ");
+                            }
+
+                            item.setSoLuong(item.getSoLuong() == null ? 0 : item.getSoLuong() + 1);
+                            return gioHangChiTietRepo.save(item);
+                        }else{
+                            Integer quantityCart = item.getSoLuong() == null ? 0 : item.getSoLuong();
+                            if( quantityCart + req.getSoLuong() >= req.getSanPhamChiTiet().getSoLuongTon()) {
+                                item.setSoLuong(req.getSoLuong() + quantityCart);
+                                return gioHangChiTietRepo.save(item);
+                            }else{
+                                throw new RuntimeException("Số lượng tồn không đủ");
+                            }
+                        }
+                    }
+                }
+
+                if(req.getSoLuong() == -1) {
+                    GioHangChiTiet cartDetail = new GioHangChiTiet();
+                    cartDetail.setIdGioHang(cart);
+                    cartDetail.setIdSanPhamChiTiet(req.getSanPhamChiTiet());
+                    cartDetail.setSoLuong(1);
+                    return gioHangChiTietRepo.save(cartDetail);
+                }else{
+                    GioHangChiTiet cartDetail = new GioHangChiTiet();
+                    cartDetail.setIdGioHang(cart);
+                    cartDetail.setIdSanPhamChiTiet(req.getSanPhamChiTiet());
+                    cartDetail.setSoLuong(req.getSoLuong());
+                    return gioHangChiTietRepo.save(cartDetail);
+                }
+
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public ArrayList<GioHangChiTiet> findCartDetailsByIdCart(Long id) {
         GioHang cart = getCartByIdCustomer(id);
         return gioHangChiTietRepo.findCartDetailsByIdCart(cart.getId());
+    }
+
+    public ArrayList<GioHangChiTiet> findCartDetailsByIdCartAndProductDetail(Long id, Long idSanPham) {
+        GioHang cart = getCartByIdCustomer(id);
+        return gioHangChiTietRepo.findCartDetailsByIdCartAndProductDetail(cart.getId(), idSanPham);
     }
 }

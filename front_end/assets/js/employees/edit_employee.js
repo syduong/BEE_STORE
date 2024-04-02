@@ -26,11 +26,11 @@ main_app.controller("editEmployeeController", function ($scope, $http, $routePar
                 ngaySinh: resp.ngaySinh,
                 cccd: resp.cccd,
                 gioiTinh: resp.gioiTinh,
+                matKhau: resp.matKhau,
                 email: resp.email,
                 soDienThoai: resp.soDienThoai,
                 maTinh: resp.maTinh,
                 maPhuong: resp.maPhuong,
-                matKhau: resp.matKhau,
                 maXa: resp.maXa,
                 tinh: resp.tinh,
                 phuong: resp.phuong,
@@ -70,7 +70,7 @@ main_app.controller("editEmployeeController", function ($scope, $http, $routePar
                 defaultOption.value = -1; // Set the value as needed
                 defaultOption.textContent = "--Chọn Tỉnh/Thành phố--"; // Set the text content
                 // Set the 'disabled' and 'selected' attributes to make it the default option
-                defaultOption.disabled = true;
+                defaultOption.disabled = false;
                 defaultOption.selected = true;
                 selectCityCustomer.appendChild(defaultOption);
                 const options = data.data;
@@ -195,6 +195,7 @@ main_app.controller("editEmployeeController", function ($scope, $http, $routePar
                 defaultOption.value = -1; // Set the value as needed
                 defaultOption.textContent = "Chọn Tỉnh"; // Set the text content
                 // Set the 'disabled' and 'selected' attributes to make it the default option
+                defaultOption.disabled = false;
                 selectCityCustomer.appendChild(defaultOption);
                 const options = data.data;
                 for (let i = 0; i < options.length; i++) {
@@ -322,7 +323,6 @@ main_app.controller("editEmployeeController", function ($scope, $http, $routePar
         }).then((result) => {
             if (result.isConfirmed) {
 
-                console.log($scope.employee)
                 if ($scope.employee.ten === "" ||
                     $scope.employee.ngaySinh === ""
                     || $scope.employee.cccd === ""

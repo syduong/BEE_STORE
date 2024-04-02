@@ -142,9 +142,9 @@
                       font-size: 12px;
                       font-weight: 800;
                       ">{{formatToVND(billDetail.idSanPhamChiTiet.idDotGiamGia == null ?
-                        billDetail.idSanPhamChiTiet.donGia : (100 -
+                        billDetail.idSanPhamChiTiet.donGia : billDetail.idSanPhamChiTiet.idDotGiamGia.trangThai == 1 ? (100 -
                         billDetail.idSanPhamChiTiet.idDotGiamGia.phanTramGiam) * billDetail.idSanPhamChiTiet.donGia /
-                        100)}}</span>
+                        100  : billDetail.idSanPhamChiTiet.donGia)}}</span>
                       <span style="
                       display: inline-block;
                       color: rgb(150, 150, 150);
@@ -152,7 +152,7 @@
                       font-weight: 800;
                       text-decoration: line-through;
                       "
-                        ng-if="billDetail.idSanPhamChiTiet.idDotGiamGia != null">{{formatToVND(billDetail.idSanPhamChiTiet.donGia)}}</span>
+                        ng-if="billDetail.idSanPhamChiTiet.idDotGiamGia != null && billDetail.idSanPhamChiTiet.idDotGiamGia.trangThai == 1">{{formatToVND(billDetail.idSanPhamChiTiet.donGia)}}</span>
 
                     </div>
                   </div>
@@ -163,7 +163,9 @@
                     ng-click="minusQuantity(billDetail)">
                     <i class="ti ti-minus" style="font-size: 14px;"></i>
                   </button>
-                  <input type="number" class="btn btn-sm btn-outline-muted text-center"
+                  <input type="number" 
+                   onkeydown="return event.keyCode !== 69 && event.keyCode !== 187 && event.keyCode !== 189"
+                   class="btn btn-sm btn-outline-muted text-center"
                     style="width: 33%;height: 40px;border-radius: 0;border-left: 0px;border-right: 0px;font-size: 14px;"
                     ng-model="billDetail.soLuong" ng-change="changeQuantity(billDetail)" disabled
                     id="bill-detail-quantity-{{billDetail.id}}">
@@ -180,9 +182,9 @@
                       text-align: center;
                       " class="border-bottom-0">
                   {{formatToVND(billDetail.idSanPhamChiTiet.idDotGiamGia == null ?
-                  (billDetail.idSanPhamChiTiet.donGia * billDetail.soLuong) : (100 -
+                  (billDetail.idSanPhamChiTiet.donGia * billDetail.soLuong) : billDetail.idSanPhamChiTiet.idDotGiamGia.trangThai == 1 ? (100 -
                   billDetail.idSanPhamChiTiet.idDotGiamGia.phanTramGiam) * billDetail.idSanPhamChiTiet.donGia *
-                  billDetail.soLuong / 100)}}
+                  billDetail.soLuong / 100 : (billDetail.idSanPhamChiTiet.donGia * billDetail.soLuong))}}
                 </td>
                 <td class="border-bottom-0">
                   <i class="ti ti-trash-x-filled" ng-click="removeBillDetailByBillAndProductDetail(billDetail.id)"
@@ -208,8 +210,6 @@
         </div>
 
       </div>
-
-
 
       <div class="card p-3 shadow">
         <!-- bread crumbs -->
@@ -249,7 +249,7 @@
             <label for="exampleInputEmail1" style="width: 150px;font-size: 12px;font-weight: 600;">Email : </label>
             <span style=" font-size: 11px;">{{customer.email}}</span>
           </div>
-          <button class="btn btn-outline-warning btn-sm" ng-click="changeToOneCustomer()" style="height: 40px;">
+          <button class="btn btn-outline-success btn-sm" ng-click="changeToOneCustomer()" style="height: 40px;">
             <i class="ti ti-a-b-2"></i>
             Chuyển về khách lẻ
           </button>
@@ -351,10 +351,25 @@
           </div>
 
           <div style="width: 48%;">
-            <input type="checkbox" ng-if="bill.idKhachHang != null" role="switch" class="paper"
+            <input type="checkbox" hidden ng-if="bill.idKhachHang != null" role="switch" class="paper"
               ng-change="changeMethodBill()" ng-model="state" />
 
-            <div class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#voucherModal"
+            <div style="margin-bottom: -22px; display: flex;">
+              <div>
+                <input ng-model="state" type="checkbox" id="switch" ng-if="bill.idKhachHang != null"
+                  ng-change="changeMethodBill()" /><label ng-if="bill.idKhachHang != null" id="label_switch"
+                  for="switch">Toggle</label>
+              </div>
+              <div style="    
+              font-weight: 700;
+              font-size: 14px;
+              transform: translate(10px, 20px)" ng-if="state == false && bill.idKhachHang != null">Tại quầy</div>
+              <div style="    
+              font-weight: 700;
+              font-size: 14px;
+              transform: translate(10px, 20px)" ng-if="state == true && bill.idKhachHang != null">Giao hàng</div>
+            </div>
+            <div class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#voucherModal"
               ng-click="openVoucherModal()"
               style="width: 100%; height: 40px;margin-top: 29px; display: flex; justify-content: space-between;font-size: 12px;">
               <div>
@@ -450,46 +465,136 @@
               <span style="display: inline-block; width: 334px; ">Chọn phương thức thanh toán:</span>
             </div>
 
-            <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 10px;">
-              <button style="width: 49%;font-size: 14px;" class="btn btn-warning button-payment-method"
-                ng-click="choosePaymentMethod(0)" id="payment-0">
-                <span style="display: inline-block;transform: translateY(-4px);">
-                  <i class="ti ti-cash" style="font-size: 30px;display: inline-block; transform: translateY(4px)"></i>
-                  Tiền mặt
-                </span>
-              </button>
+            <div style=" display: flex;">
+              <div>
+                <input ng-model="stateBillMethod" type="checkbox" id="switch_1" ng-if="state == true"
+                  ng-click="chooseBillPaymentMethod()"/><label ng-if="state == true" id="label_switch_1"
+                  for="switch_1">Toggle</label>
+              </div>
+              <div style="    
+              font-weight: 700;
+              font-size: 14px;
+              transform: translate(10px, 20px)" ng-if="state == true && stateBillMethod == false">Thanh toán ngay</div>
+              <div style="    
+              font-weight: 700;
+              font-size: 14px;
+              transform: translate(10px, 20px)" ng-if="state == true && stateBillMethod == true">Chờ thanh toán</div>
+            </div>
 
-              <button style="width: 49%;font-size: 14px;" class="btn btn-outline-warning button-payment-method"
-                data-bs-target="#vietQrModal" ng-click="openModalVietQr()" data-bs-toggle="modal" id="payment-1">
-                <img style="   
+            <div ng-if="state == false">
+              <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 10px;">
+                <button style="width: 49%;font-size: 14px;" class="btn btn-success button-payment-method"
+                  ng-click="choosePaymentMethod(0)" id="payment-0">
+                  <span style="display: inline-block;transform: translateY(-4px);">
+                    <i class="ti ti-cash" style="font-size: 30px;display: inline-block; transform: translateY(4px)"></i>
+                    Tiền mặt
+                  </span>
+                </button>
+
+                <button style="width: 49%;font-size: 14px;" class="btn btn-outline-success button-payment-method"
+                  ng-click="openModalVietQr()" id="payment-1">
+                  <img style="   
                  width: 29%;
                 transform: translateY(-2px);" src="https://i.gyazo.com/566d62fd25cf0867e0033fb1b9b47927.png">
-                Chuyển khoản
-              </button>
+                  Chuyển khoản
+                </button>
 
-            </div>
+              </div>
 
-            <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 5px;">
-              <button style="width: 100%;font-size: 14px;padding: 15px;"
-                class="btn btn-outline-warning button-payment-method" ng-click="choosePaymentMethod(2)" id="payment-2">
-                <span style="display: inline-block;transform: translateY(-5px);">
-                  <i class="ti ti-cash" style="font-size: 30px; transform: translateY(4px);display: inline-block;"></i>
-                  Tiền mặt và
-                  <img style="   
+              <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 5px;">
+                <button style="width: 100%;font-size: 14px;padding: 15px;"
+                  class="btn btn-outline-success button-payment-method" ng-click="choosePaymentMethod(2)"
+                  id="payment-2">
+                  <span style="display: inline-block;transform: translateY(-5px);">
+                    <i class="ti ti-cash"
+                      style="font-size: 30px; transform: translateY(4px);display: inline-block;"></i>
+                    Tiền mặt và
+                    <img style="   
                  width: 17%;
                 transform: translateY(-2px);" src="https://i.gyazo.com/566d62fd25cf0867e0033fb1b9b47927.png">
-                  chuyển khoản
-                </span>
+                    chuyển khoản
+                  </span>
 
-              </button>
+                </button>
 
+              </div>
+
+              <div style="margin-bottom: 15px; margin-top: 20px;">
+                <label for="exampleInputEmail1" class="form-label">Ghi chú: <sup
+                    style="color: #fa0000a8;">*</sup></label>
+
+                <textarea placeholder="Nhập mô tả...." type="text" class="form-control" ng-model="bill.ghiChu"
+                  id="exampleInputEmail1" rows="2" aria-describedby="emailHelp"></textarea>
+              </div>
             </div>
 
-            <div style="margin-bottom: 15px; margin-top: 20px;">
-              <label for="exampleInputEmail1" class="form-label">Ghi chú: <sup style="color: #fa0000a8;">*</sup></label>
+            <div ng-if="state == true && stateBillMethod == true">
 
-              <textarea placeholder="Nhập mô tả...." type="text" class="form-control" ng-model="bill.ghiChu"
-                id="exampleInputEmail1" rows="2" aria-describedby="emailHelp"></textarea>
+              <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 5px;">
+                <button style="width: 100%;font-size: 14px;" class="btn btn-warning button-payment-method"
+                  id="payment-3">
+                  <span style="display: inline-block;transform: translateY(-4px);">
+                    <i class="ti ti-cash" style="font-size: 30px;display: inline-block; transform: translateY(4px)"></i>
+                    Thanh toán khi nhận hàng
+                  </span>
+                </button>
+
+              </div>
+
+              <div style="margin-bottom: 15px; margin-top: 20px;">
+                <label for="exampleInputEmail1" class="form-label">Ghi chú: <sup
+                    style="color: #fa0000a8;">*</sup></label>
+
+                <textarea placeholder="Nhập mô tả...." type="text" class="form-control" ng-model="bill.ghiChu"
+                  id="exampleInputEmail1" rows="2" aria-describedby="emailHelp"></textarea>
+              </div>
+            </div>
+
+            <div ng-if="state == true && stateBillMethod == false">
+              <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 10px;">
+                <button style="width: 49%;font-size: 14px;" class="btn btn-warning button-payment-method"
+                  ng-click="choosePaymentMethod(0)" id="payment-0">
+                  <span style="display: inline-block;transform: translateY(-4px);">
+                    <i class="ti ti-cash" style="font-size: 30px;display: inline-block; transform: translateY(4px)"></i>
+                    Tiền mặt
+                  </span>
+                </button>
+
+                <button style="width: 49%;font-size: 14px;" class="btn btn-outline-warning button-payment-method"
+                  ng-click="openModalVietQr()" id="payment-1">
+                  <img style="   
+                 width: 29%;
+                transform: translateY(-2px);" src="https://i.gyazo.com/566d62fd25cf0867e0033fb1b9b47927.png">
+                  Chuyển khoản
+                </button>
+
+              </div>
+
+              <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 5px;">
+                <button style="width: 100%;font-size: 14px;padding: 15px;"
+                  class="btn btn-outline-warning button-payment-method" ng-click="choosePaymentMethod(2)"
+                  id="payment-2">
+                  <span style="display: inline-block;transform: translateY(-5px);">
+                    <i class="ti ti-cash"
+                      style="font-size: 30px; transform: translateY(4px);display: inline-block;"></i>
+                    Tiền mặt và
+                    <img style="   
+                 width: 17%;
+                transform: translateY(-2px);" src="https://i.gyazo.com/566d62fd25cf0867e0033fb1b9b47927.png">
+                    chuyển khoản
+                  </span>
+
+                </button>
+
+              </div>
+
+              <div style="margin-bottom: 15px; margin-top: 20px;">
+                <label for="exampleInputEmail1" class="form-label">Ghi chú: <sup
+                    style="color: #fa0000a8;">*</sup></label>
+
+                <textarea placeholder="Nhập mô tả...." type="text" class="form-control" ng-model="bill.ghiChu"
+                  id="exampleInputEmail1" rows="2" aria-describedby="emailHelp"></textarea>
+              </div>
             </div>
 
             <div style="width: 100%;display: flex;justify-content: space-between;margin-top: 10px;">
@@ -612,17 +717,23 @@
                         <span>Thương hiệu: {{product.idSanPham.idThuongHieu.ten}}</span>
                       </div>
 
-                      <div class="d-flex align-items-center gap-2" ng-if="product.trangThai == 0">
+                      <div class="d-flex align-items-center gap-2" ng-if="product.trangThai == 0 ">
                         <span class="badge bg-danger rounded-3 fw-semibold" style="    
                                   padding: 10px;
                                   font-size: 8px;">Ngừng kinh doanh</span>
                       </div>
 
-                      <div class="d-flex align-items-center gap-2" ng-if="product.trangThai == 1" "
+                      <div class="d-flex align-items-center gap-2" ng-if="product.trangThai == 1 && product.soLuongTon > 0 "
                       >
                         <span class=" badge bg-primary rounded-3 fw-semibold" style="    
                                 padding: 10px;
                                 font-size: 8px;">Đang kinh doanh</span>
+                      </div>
+                      <div class="d-flex align-items-center gap-2" ng-if="product.trangThai == 1 && product.soLuongTon <= 0 "
+                      >
+                        <span class=" badge bg-danger rounded-3 fw-semibold" style="    
+                                padding: 10px;
+                                font-size: 8px;">Hết hàng</span>
                       </div>
 
                     </div>
@@ -637,19 +748,27 @@
                       color: red;
                       font-size: 12px;
                       font-weight: 800;
-                      ">{{formatToVND(product.idDotGiamGia == null ? product.donGia : (100 -
-                    product.idDotGiamGia.phanTramGiam) * product.donGia / 100)}}</span>
+                      ">{{formatToVND(product.idDotGiamGia == null ? product.donGia : product.idDotGiamGia.trangThai == 1?
+                       (100 - product.idDotGiamGia.phanTramGiam) * product.donGia / 100
+                        : product.donGia)}}</span>
                   <span style="
                       display: inline-block;
                       color: rgb(150, 150, 150);
                       font-size: 10px;
                       font-weight: 800;
                       text-decoration: line-through;
-                      " ng-if="billDetail.idSanPhamChiTiet.idDotGiamGia != null">{{formatToVND(product.donGia)}}</span>
+                      " ng-if="product.idDotGiamGia != null && product.idDotGiamGia.trangThai == 1">{{formatToVND(product.donGia)}}</span>
 
                 </td>
                 <td class="border-bottom-0">
-                  <button class="btn btn-primary" ng-click="addProductToBill(product)">Chọn</button>
+                  <button class="btn btn-primary" ng-if="product.soLuongTon > 0 && product.trangThai == 1" 
+                    ng-click="addProductToBill(product)">Chọn</button>
+                  <button class="btn btn-danger" disabled ng-if="product.soLuongTon == 0 && product.trangThai == 1" >
+                    Hết hàng
+                  </button>
+                  <button class="btn btn-danger" disabled ng-if="product.trangThai == 0" >
+                    Ngừng kinh doanh
+                  </button>
                 </td>
               </tr>
 
@@ -685,8 +804,52 @@
           class="form-control" ng-model="code_voucher" id="exampleInputEmail1" aria-describedby="emailHelp"
           ng-keyup="searchVoucher()">
 
+        <label for="exampleInputEmail1" class="form-label" ng-if="voucherPrivates.length !== 0">Voucher dành riêng cho
+          bạn: </label>
         <div class="card" style="display: flex;justify-content: space-between;padding: 20px;position: relative;"
-          ng-repeat="voucher in vouchers">
+          ng-repeat="voucher in voucherPrivates" ng-if="voucher.trangThai == 1">
+          <div style="width: 80%;font-size: 12px;">
+            <div>
+              <span style="color: #5D87FF;">[{{voucher.ma}}]</span>
+              <span style="
+                  display: inline-block;
+                  font-weight: 500;">
+                {{voucher.ten}}
+              </span>
+              <button class="btn btn-info" style="
+                  color: white;
+                  padding: 4px;
+                  font-size: 10px;">- {{voucher.phanTramGiam}}%</button>
+            </div>
+          </div>
+
+          <div>
+            <span style="display: inline-block;font-size: 10px;font-weight: 400; width: 100px;">Giá trị tối
+              thiểu:</span>
+            <span style="display: inline-block;font-size: 10px">{{formatToVND(voucher.giaTriToiThieu)}}</span>
+          </div>
+
+          <div>
+            <span style="display: inline-block;font-size: 10px;font-weight: 400; width: 100px;">Ngày kết thúc:</span>
+            <span style="display: inline-block;font-size: 10px">{{voucher.ngayKetThuc| date : 'HH:mm
+              dd/MM/yyyy'}}</span>
+          </div>
+
+          <button class="btn btn-primary" style="
+                    position: absolute;
+                    right: 20px;
+                    bottom: 32px;
+                    " ng-click="addVoucherToBill(voucher)" ng-if="voucher.soLanDung != 0">Chọn</button>
+          <button class="btn btn-danger" style="
+                    position: absolute;
+                    right: 20px;
+                    bottom: 32px;
+                    " disabled ng-if="voucher.soLanDung == 0">Hết voucher</button>
+        </div>
+
+        <label for="exampleInputEmail1" class="form-label" ng-if="voucherPrivates.length !== 0">Voucher khác: </label>
+        <div class="card" style="display: flex;justify-content: space-between;padding: 20px;position: relative;"
+          ng-repeat="voucher in voucherPublics" ng-if="voucher.trangThai == 1">
           <div style="width: 80%;font-size: 12px;">
             <div>
               <span style="color: #5D87FF;">[{{voucher.ma}}]</span>
@@ -843,6 +1006,97 @@
 </div>
 
 <!--modal create vietQr -->
+<div class="modal fade" id="moneyPaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Thanh toán bằng tiền mặt</h5>
+        <button type="button" ng-click="closeQrCodeModal()" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Đóng"></button>
+      </div>
+
+      <!-- body -->
+      <div class="modal-body">
+
+        <div style="margin-bottom: 5px;">
+          <label for="exampleInputEmail1" class="form-label" style="width: 150px;">Số tiền khách cần trả:</label>
+          <span style="
+          color: red;
+          font-size: 14px;
+          font-weight: 800;
+          text-align: center;
+          display: inline-block;
+          ">{{formatToVND(totalAllPrice)}}</span>
+        </div>
+
+        <div style="display: flex;margin-bottom: 5px;">
+          <label for="exampleInputEmail1" class="form-label" style="width: 234px;">Số tiền khách đưa:</label>
+          <input placeholder="Nhập số tiền khách đưa...." style="height: 40px;margin-bottom: 10px;" type="text"
+            class="form-control" ng-model="moneyCustomerPayment" id="exampleInputEmail1" aria-describedby="emailHelp"
+            ng-keyup="customerPaymenting()">
+        </div>
+
+        <div style="display: flex;margin-bottom: 5px;" ng-if="overage >= 0">
+          <label for="exampleInputEmail1" class="form-label" style="width: 150px;">Số tiền thừa:</label>
+          <span style="
+          color: #13DEB9;
+          font-size: 14px;
+          font-weight: 800;
+          text-align: center;
+          display: inline-block;
+          ">{{formatToVND(overage)}}</span>
+        </div>
+
+        <div style="display: flex;margin-bottom: 5px;" ng-if="overage < 0">
+          <label for="exampleInputEmail1" class="form-label" style="width: 150px;">Số còn thiếu:</label>
+          <span style="
+          color: red;
+          font-size: 14px;
+          font-weight: 800;
+          text-align: center;
+          display: inline-block;
+          ">{{formatToVND(overage)}}</span>
+        </div>
+
+      </div>
+
+      <!-- footer -->
+      <div class="modal-footer" style="display: flex;justify-content: space-evenly;">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          <i class="ti ti-x" style="
+                  display: inline-block;
+                  font-size: 18px;
+                  transform: translateY(2px);
+              "></i>
+          Đóng</button>
+        <button type="button" class="btn btn-success" ng-class="{
+          'btn btn-danger': overage < 0,
+          'btn btn-success': overage >= 0
+         }" ng-disabled="overage < 0" ng-if="overage >= 0" ng-click="createOrder()">
+          <i class="ti ti-checks" style="
+                          display: inline-block;
+                          font-size: 18px;
+                          transform: translateY(2px);
+                      "></i>
+          {{overage < 0 ? 'Cần nhập đủ số tiền' : 'Hoàn thành' }} </button>
+
+            <button type="button" class="btn btn-success" ng-class="{
+          'btn btn-danger': overage < 0,
+          'btn btn-success': overage >= 0
+         }" ng-disabled="overage < 0" ng-if="overage < 0">
+              <i class="ti ti-x" style="
+                          display: inline-block;
+                          font-size: 18px;
+                          transform: translateY(2px);
+                      "></i>
+              {{overage < 0 ? 'Cần nhập đủ số tiền' : 'Hoàn thành' }} </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal create vietQr -->
 <div class="modal fade" id="vietQrModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -868,7 +1122,86 @@
                   transform: translateY(2px);
               "></i>
           Đóng</button>
-        <button type="button" class="btn btn-success" ng-click="createNewBill()">
+        <button type="button" class="btn btn-success" ng-click="createOrder()">
+          <i class="ti ti-checks" style="
+                          display: inline-block;
+                          font-size: 18px;
+                          transform: translateY(2px);
+                      "></i>
+          Thành công
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal qr and money -->
+<div class="modal fade" id="vietQrAndMoneyModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">1: Nhập số tiền mặt khách đưa</h5>
+        <button type="button" ng-click="closeQrCodeModal()" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Đóng"></button>
+      </div>
+
+      <!-- body -->
+      <div class="modal-body">
+        <div>
+          <label for="exampleInputEmail1" class="form-label" style="width: 234px;">Số tiền khách đưa:</label>
+          <input placeholder="Nhập số tiền khách đưa...." style="height: 40px;margin-bottom: 10px;" type="text"
+            class="form-control" ng-model="moneyCustomerPayment" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+      </div>
+
+      <!-- footer -->
+      <div class="modal-footer" style="display: flex;justify-content: space-evenly;">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          <i class="ti ti-x" style="
+                  display: inline-block;
+                  font-size: 18px;
+                  transform: translateY(2px);
+              "></i>
+          Đóng</button>
+        <button type="button" class="btn btn-success" ng-click="payMethod3Step1()">
+          <i class="ti ti-checks" style="
+                          display: inline-block;
+                          font-size: 18px;
+                          transform: translateY(2px);
+                      "></i>
+          Tiếp theo
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="vietQrAndMoneyModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">2: Quét qrcode số tiền còn lại</h5>
+        <button type="button" ng-click="closeQrCodeModal()" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Đóng"></button>
+      </div>
+
+      <!-- body -->
+      <div class="modal-body" style="padding: 0;">
+        <img src="{{vietQrUrl}}" style="
+         width: 78%;
+        margin-left: 62px;" alt="">
+      </div>
+
+      <!-- footer -->
+      <div class="modal-footer" style="display: flex;justify-content: space-evenly;">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          <i class="ti ti-x" style="
+                  display: inline-block;
+                  font-size: 18px;
+                  transform: translateY(2px);
+              "></i>
+          Đóng</button>
+        <button type="button" class="btn btn-success" ng-click="createOrder()">
           <i class="ti ti-checks" style="
                           display: inline-block;
                           font-size: 18px;

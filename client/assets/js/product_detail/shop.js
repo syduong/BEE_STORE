@@ -22,6 +22,13 @@ clientApp.controller('shopControllers',
         $scope.productDetails = []
         $scope.products = []
 
+        $scope.loadSizes = () => {
+            $http.get('http://localhost:8080/size/get-all')
+                .then(function (response) {
+                    $scope.sizes = response.data
+                });
+        }
+
         $scope.loadProductDetails = () => {
             $http.get('http://localhost:8080/product-detail/get-all?size=1000&page=0').then(function (response) {
                 $scope.productDetails = response.data
@@ -159,16 +166,13 @@ clientApp.controller('shopControllers',
                             $scope.products.push(product)
                         }
                     })
+                    $scope.loadSizes()
 
-
-                    $scope.loadData()
                 }, 100);
             }).catch(function (error) {
                 console.log(error)
             })
         }
-
-        $scope.loadProductDetails()
 
         rangeSlider.slider({
             slide: function (event, ui) {
@@ -204,6 +208,9 @@ clientApp.controller('shopControllers',
 
         }
 
+        $scope.loadProductDetails()
+
+        $scope.loadData()
 
         $scope.chooseSize = (id) => {
             var check = document.getElementById("size_product_" + id).checked
@@ -268,6 +275,15 @@ clientApp.controller('shopControllers',
                 minimumFractionDigits: 0, // Set to 0 to display whole numbers
             });
             return formatter.format(amount);
+        }
+
+        $scope.getAllImagesByIDProductDetail = function (id) {
+            var html = document.getElementById("image-" + id);
+            axios.get('http://localhost:8080/image/get-all/' + id).then(function (response) {
+                html.src = response.data[0].duongDan
+            }).catch(function (error) {
+                console.log(error)
+            })
         }
 
     });

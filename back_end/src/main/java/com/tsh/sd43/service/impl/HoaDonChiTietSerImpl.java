@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @Service
@@ -41,6 +42,12 @@ public class HoaDonChiTietSerImpl implements IHoaDonChiTietSer {
                 hoaDonChiTiet.setSoLuong(1);
                 hoaDonChiTiet.setDonGia(req.getSanPhamChiTiet().getDonGia());
                 hoaDonChiTiet.setTrangThai(1);
+                if(req.getSanPhamChiTiet().getIdDotGiamGia() != null) {
+                    if(req.getSanPhamChiTiet().getIdDotGiamGia().getTrangThai() == 1) {
+                        hoaDonChiTiet.setDonGiaSauKhiGiam(BigDecimal.valueOf((100 - req.getSanPhamChiTiet().getIdDotGiamGia().getPhanTramGiam())
+                                * req.getSanPhamChiTiet().getDonGia().doubleValue()/100));
+                    }
+                }
                 return hoaDonChiTietRepo.save(hoaDonChiTiet);
             }else{
                 for(HoaDonChiTiet item : productDetails) {
@@ -50,12 +57,23 @@ public class HoaDonChiTietSerImpl implements IHoaDonChiTietSer {
                             if(item.getSoLuong() + 1 > req.getSanPhamChiTiet().getSoLuongTon()) {
                                 throw new RuntimeException("Số lượng còn lại không đủ");
                             }
-
+                            if(req.getSanPhamChiTiet().getIdDotGiamGia() != null) {
+                                if(req.getSanPhamChiTiet().getIdDotGiamGia().getTrangThai() == 1){
+                                    item.setDonGiaSauKhiGiam(BigDecimal.valueOf((100 -req.getSanPhamChiTiet().getIdDotGiamGia().getPhanTramGiam())
+                                            * req.getSanPhamChiTiet().getDonGia().doubleValue()/100));
+                                }
+                            }
                             item.setSoLuong(item.getSoLuong() + 1);
                             return hoaDonChiTietRepo.save(item);
                         }else{
                             if(req.getSanPhamChiTiet().getSoLuongTon() >= req.getSoLuong()) {
                                 item.setSoLuong(req.getSoLuong());
+                                if(req.getSanPhamChiTiet().getIdDotGiamGia() != null) {
+                                    if(req.getSanPhamChiTiet().getIdDotGiamGia().getTrangThai() == 1){
+                                        item.setDonGiaSauKhiGiam(BigDecimal.valueOf((100 - req.getSanPhamChiTiet().getIdDotGiamGia().getPhanTramGiam())
+                                                * req.getSanPhamChiTiet().getDonGia().doubleValue()/100));
+                                    }
+                                }
                                 return hoaDonChiTietRepo.save(item);
                             }else{
                                 throw new RuntimeException("Số lượng tồn không đủ");
@@ -71,6 +89,13 @@ public class HoaDonChiTietSerImpl implements IHoaDonChiTietSer {
                     hoaDonChiTiet.setSoLuong(1);
                     hoaDonChiTiet.setDonGia(req.getSanPhamChiTiet().getDonGia());
                     hoaDonChiTiet.setTrangThai(1);
+                    if(req.getSanPhamChiTiet().getIdDotGiamGia() != null) {
+                        if(req.getSanPhamChiTiet().getIdDotGiamGia().getTrangThai() == 1){
+                            hoaDonChiTiet.setDonGiaSauKhiGiam(BigDecimal.valueOf((100 -req.getSanPhamChiTiet().getIdDotGiamGia().getPhanTramGiam())
+                                    * req.getSanPhamChiTiet().getDonGia().doubleValue()/100));
+                        }
+
+                    }
                     return hoaDonChiTietRepo.save(hoaDonChiTiet);
                 }else{
                     HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
@@ -79,10 +104,95 @@ public class HoaDonChiTietSerImpl implements IHoaDonChiTietSer {
                     hoaDonChiTiet.setSoLuong(req.getSoLuong());
                     hoaDonChiTiet.setDonGia(req.getSanPhamChiTiet().getDonGia());
                     hoaDonChiTiet.setTrangThai(1);
+                    if(req.getSanPhamChiTiet().getIdDotGiamGia() != null) {
+                        if(req.getSanPhamChiTiet().getIdDotGiamGia().getTrangThai() == 1){
+                            hoaDonChiTiet.setDonGiaSauKhiGiam(BigDecimal.valueOf((100 -req.getSanPhamChiTiet().getIdDotGiamGia().getPhanTramGiam())
+                                    * req.getSanPhamChiTiet().getDonGia().doubleValue()/100));
+                        }
+                    }
                     return hoaDonChiTietRepo.save(hoaDonChiTiet);
                 }
 
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public HoaDonChiTiet addProductToBillRefund(ProductDetailRequest req) {
+        try {
+            HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+            hoaDonChiTiet.setIdHoaDon(req.getHoaDon());
+            hoaDonChiTiet.setIdSanPhamChiTiet(req.getSanPhamChiTiet());
+            hoaDonChiTiet.setSoLuong(req.getSoLuong());
+            hoaDonChiTiet.setDonGia(req.getSanPhamChiTiet().getDonGia());
+            hoaDonChiTiet.setTrangThai(1);
+            if(req.getSanPhamChiTiet().getIdDotGiamGia() != null) {
+                if(req.getSanPhamChiTiet().getIdDotGiamGia().getTrangThai() == 1){
+                    hoaDonChiTiet.setDonGiaSauKhiGiam(BigDecimal.valueOf((100 -req.getSanPhamChiTiet().getIdDotGiamGia().getPhanTramGiam())
+                            * req.getSanPhamChiTiet().getDonGia().doubleValue()/100));
+                }
+            }
+            return hoaDonChiTietRepo.save(hoaDonChiTiet);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public HoaDonChiTiet addProductToBillClient(ProductDetailRequest req) {
+        try {
+
+            if(req.getSoLuong() > req.getSanPhamChiTiet().getSoLuongTon()) {
+                throw new RuntimeException("Số lượng còn lại không đủ");
+            }
+            ArrayList<HoaDonChiTiet> billDetails = hoaDonChiTietRepo.findBillDetailsByIdBill(req.getHoaDon().getId());
+
+            if(billDetails.size() == 0) {
+                HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+                hoaDonChiTiet.setIdHoaDon(req.getHoaDon());
+                hoaDonChiTiet.setIdSanPhamChiTiet(req.getSanPhamChiTiet());
+                hoaDonChiTiet.setSoLuong(req.getSoLuong());
+                hoaDonChiTiet.setDonGia(req.getSanPhamChiTiet().getDonGia());
+                hoaDonChiTiet.setTrangThai(1);
+                if(req.getSanPhamChiTiet().getIdDotGiamGia() != null) {
+                    if(req.getSanPhamChiTiet().getIdDotGiamGia().getTrangThai() == 1){
+                        hoaDonChiTiet.setDonGiaSauKhiGiam(BigDecimal.valueOf((100 -req.getSanPhamChiTiet().getIdDotGiamGia().getPhanTramGiam())
+                                * req.getSanPhamChiTiet().getDonGia().doubleValue()/100));
+                    }
+                }
+                return hoaDonChiTietRepo.save(hoaDonChiTiet);
+            }else {
+                for(HoaDonChiTiet item : billDetails) {
+                    if(item.getIdSanPhamChiTiet().getId().equals(req.getSanPhamChiTiet().getId())) {
+                        item.setSoLuong(req.getSoLuong());
+                        if(req.getSanPhamChiTiet().getIdDotGiamGia() != null) {
+                            if(req.getSanPhamChiTiet().getIdDotGiamGia().getTrangThai() == 1){
+                                item.setDonGiaSauKhiGiam(BigDecimal.valueOf((100 -req.getSanPhamChiTiet().getIdDotGiamGia().getPhanTramGiam())
+                                        * req.getSanPhamChiTiet().getDonGia().doubleValue()/100));
+                            }
+                        }
+
+                        return hoaDonChiTietRepo.save(item);
+                    }
+                }
+
+                HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+                hoaDonChiTiet.setIdHoaDon(req.getHoaDon());
+                hoaDonChiTiet.setIdSanPhamChiTiet(req.getSanPhamChiTiet());
+                hoaDonChiTiet.setSoLuong(req.getSoLuong());
+                hoaDonChiTiet.setDonGia(req.getSanPhamChiTiet().getDonGia());
+                hoaDonChiTiet.setTrangThai(1);
+                if(req.getSanPhamChiTiet().getIdDotGiamGia() != null) {
+                    if(req.getSanPhamChiTiet().getIdDotGiamGia().getTrangThai() == 1){
+                        hoaDonChiTiet.setDonGiaSauKhiGiam(BigDecimal.valueOf((100 -req.getSanPhamChiTiet().getIdDotGiamGia().getPhanTramGiam())
+                                * req.getSanPhamChiTiet().getDonGia().doubleValue()/100));
+                    }
+                }
+                return hoaDonChiTietRepo.save(hoaDonChiTiet);
+
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -98,5 +208,9 @@ public class HoaDonChiTietSerImpl implements IHoaDonChiTietSer {
 
     public HoaDonChiTiet updateBillDetail(HoaDonChiTiet req) {
         return hoaDonChiTietRepo.save(req);
+    }
+
+    public ArrayList<HoaDonChiTiet> getBillDetailByState(Integer state, Long id) {
+        return hoaDonChiTietRepo.findBillDetailByState(state, id);
     }
 }

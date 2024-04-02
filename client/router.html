@@ -10,7 +10,7 @@
     <meta name="description" content="meta description">
     <title>The sneaker house</title>
     <!--=== Favicon ===-->
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/img/logo/favicon.png" type="image/x-icon" />
     <!--=== All Plugins CSS ===-->
     <link href="assets/css/plugins.css" rel="stylesheet">
     <!--=== All Vendor CSS ===-->
@@ -66,8 +66,7 @@
                                 <a href="#!trang-chu" style="   
                                  font-size: 19px;
                                 font-weight: 200;">
-                                    <img src="assets/img/logo/logo.png" style="width: 51%;
-                                   margin-left: 56px;" />
+                                    <img src="assets/img/logo/logo.png" alt="" style="width: 70%;">
                                 </a>
                             </div>
                         </div>
@@ -80,10 +79,10 @@
                                     <!-- main menu navbar start -->
                                     <nav class="desktop-menu">
                                         <ul>
-                                            <li class="active"><a href="#!trang-chu" style="font-weight: 600;">Trang
+                                            <li class="active" id="home" ng-click="changeActive(0)"><a href="#!trang-chu" style="font-weight: 600;" >Trang
                                                     chủ</a>
                                             </li>
-                                            <li class="static" style="font-weight: 600;"><a href="#!danh-sach-san-pham"
+                                            <li class="static" id="men_shoes"  ng-click="changeActive(1)"  style="font-weight: 600;"><a href="#!danh-sach-san-pham"
                                                     style="font-weight: 600;">Danh sách giày
                                                     <!-- <i class="fa fa-angle-down"></i> -->
                                                 </a>
@@ -112,22 +111,6 @@
                                                                 </a></li>
                                                         </ul>
                                                     </li>
-                                                </ul> -->
-                                            </li>
-                                            <li hidden>
-                                                <a href="#!danh-sach-san-pham" style="font-weight: 600;">Giày nữ
-                                                    <!-- <i class="fa fa-angle-down"></i> -->
-                                                </a>
-                                                <!-- <ul class="dropdown">
-                                                    <li><a href="shop.html">Addidas
-                                                        </a></li>
-                                                    <li><a href="shop-grid-right-sidebar.html">Nike
-                                                        </a></li>
-                                                    <li><a href="shop-list-left-sidebar.html">Vans
-                                                        </a></li>
-                                                    <li><a href="shop-list-right-sidebar.html">Balenciaga
-                                                        </a></li>
-
                                                 </ul> -->
                                             </li>
 
@@ -159,12 +142,14 @@
                                                 width: 34px;
                                                 height: 34px;
                                                 transform: translateY(-7px);" ng-if="user.avatar != null">
+
                                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuL1DqQXdqW4ZQdqeYHwQ4ZxBEUUj9c0LeKeA481_YuDnh4UkLeBG4CsWiTOjlTYgOaQU&usqp=CAU"
                                                     alt="" style="
-                                                border-radius: 50%;
-                                                width: 34px;
-                                                height: 34px;
-                                                transform: translateY(-7px);" ng-if="user.avatar == null">
+                                                            border-radius: 50%;
+                                                            width: 34px;
+                                                            height: 34px;
+                                                            transform: translateY(-7px);" 
+                                                            ng-if="user.avatar == null">
                                             </a>
 
                                             <ul class="dropdown-list" ng-if="user == null">
@@ -181,8 +166,8 @@
                                         </li>
                                         <li ng-click="showMiniCart()">
                                             <a class="minicart-btn">
-                                                <i class="ion-bag"></i>
-                                                <div class="notification" id="quantity_of_cart_mobile">2</div>
+                                                <i class="ti ti-garden-cart"></i>
+                                                <div class="notification" id="quantity_of_cart_mobile">0</div>
                                             </a>
                                         </li>
                                     </ul>
@@ -208,13 +193,13 @@
                                 <a href="#!trang-chu" style="   
                                      font-size: 15px;
                                      font-weight: 600;">
-                                    Bee shoes
+                                    <img src="assets/img/logo/logo.png" alt="">
                                 </a>
                             </div>
                             <div class="mobile-menu-toggler">
                                 <div class="mini-cart-wrap">
-                                    <i class="ion-bag"></i>
-                                    <div class="notification" id="quantity_of_cart">2</div>
+                                    <i class="ti ti-garden-cart"></i>
+                                    <div class="notification" id="quantity_of_cart">0</div>
                                 </div>
                                 <div class="mobile-menu-btn">
                                     <div class="off-canvas-btn">
@@ -247,8 +232,7 @@
                                 <a href="index.html" style="   
                                 font-size: 19px;
                                font-weight: 200;">
-                                   <img src="assets/img/logo/logo.png" style="width: 51%;
-                                   margin-left: 56px;" />
+                                 <img src="assets/img/logo/logo.png" alt="" style="width: 40%;">
                                 </a>
                             </h5>
                             <div class="widget-body">
@@ -271,11 +255,7 @@
                             <div class="widget-body">
                                 <ul class="useful-link">
                                     <li><a href="#">Giày thể thao</a></li>
-                                    <li><a href="#">Giày chạy bộ</a></li>
                                     <li><a href="#">Giày đá bóng</a></li>
-                                    <li><a href="#">Giày bóng rổ</a></li>
-                                    <li><a href="#">Giày nữ</a></li>
-                                    <li><a href="#">Giày nam</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -305,10 +285,6 @@
                                 <ul class="useful-link">
                                     <li><a href="#">Addidas</a></li>
                                     <li><a href="#">Nike</a></li>
-                                    <li><a href="#">Puma</a></li>
-                                    <li><a href="#">Xiaomi</a></li>
-                                    <li><a href="#">Gucci</a></li>
-                                    <li><a href="#">Louis Vuiton</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -319,28 +295,6 @@
         </div>
         <!-- footer main area end -->
 
-        <!-- footer bottom area start -->
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 order-2 order-md-1">
-                        <div class="copyright-text text-center text-md-start">
-                            <p>&copy; 2024 <b>Infinity</b> Made with <i class="fa fa-heart text-danger"></i> by <a
-                                    href="https://hasthemes.com/"><b>every body</b></a></p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 order-1 order-md-2">
-                        <div class="footer-social-link text-center text-md-end">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- footer bottom area end -->
     </footer>
     <!-- End Footer Area Wrapper -->
 
@@ -381,7 +335,7 @@
                                         <span
                                             ng-repeat="img in getAllImagesByIDProductDetail(cartDetail.idSanPhamChiTiet.id)"></span>
                                         <img src="assets/img/cart/cart-1.jpg" alt="product"
-                                            id="image-{{cartDetail.idSanPhamChiTiet.id}}">
+                                            id="image-cart-{{cartDetail.idSanPhamChiTiet.id}}">
                                     </a>
                                 </div>
                                 <div class="minicart-content">
@@ -432,10 +386,10 @@
                     </div>
 
                     <div class="minicart-button">
-                        <a href="#!gio-hang" style="background-color: #72d9ab;"><i class="fa fa-shopping-cart"></i>Đi
+                        <a href="#!gio-hang" style="background-color: #22dd77;"><i class="fa fa-shopping-cart"></i>Đi
                             đến
                             giỏ hàng</a>
-                        <a href="#!thanh-toan" style="background-color: #72d9ab;"><i class="fa fa-share"></i> Thanh
+                        <a href="#!thanh-toan" style="background-color: #22dd77;"><i class="fa fa-share"></i> Thanh
                             toán</a>
                     </div>
                 </div>
@@ -484,6 +438,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- sockjs -->
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="http://cdn.sockjs.org/websocket-multiplex-0.1.js"></script>
 
     <!-- custom code -->
     <script>
@@ -534,6 +492,16 @@
                     console.log($scope.user)
                 }
 
+                $scope.checkUser = () => {
+                    if($scope.user != null){
+                        $http.get('http://localhost:8080/customer/get-customer/' + $scope.user.id).then(function (response) {
+                            localStorage.setItem("user", JSON.stringify(response.data))
+                        })
+                    }else{
+                        localStorage.setItem("user", null)
+                    }
+                }
+
                 $scope.formatToVND = function (amount) {
                     const formatter = new Intl.NumberFormat("vi-VN", {
                         style: "currency",
@@ -544,7 +512,7 @@
                 }
 
                 $scope.getAllImagesByIDProductDetail = function (id) {
-                    var html = document.getElementById("image-" + id);
+                    var html = document.getElementById("image-cart-" + id);
                     axios.get('http://localhost:8080/image/get-all/' + id).then(function (response) {
                         html.src = response.data[0].duongDan
                     }).catch(function (error) {
@@ -573,6 +541,20 @@
                     })
                 }
 
+                $scope.changeActive = (status) => {
+                    if(status == 0){
+                        document.getElementById("home").classList.add('active')
+                        document.getElementById("home").classList.remove('static')
+                        document.getElementById("men_shoes").classList.add('static')
+                        document.getElementById("men_shoes").classList.remove('active')
+                    }else{
+                        document.getElementById("home").classList.add('static')
+                        document.getElementById("home").classList.remove('active')
+                        document.getElementById("men_shoes").classList.add('active')
+                        document.getElementById("men_shoes").classList.remove('static')
+                    }
+                }
+
                 $scope.search = () => {
                     console.log($scope.searchText)
                     $http.get('http://localhost:8080/bill/get-bill-by-code/' + $scope.searchText).then(function (response) {
@@ -589,6 +571,8 @@
                 }
 
                 $scope.showMiniCart();
+
+                $scope.checkUser()
 
                 $scope.logOut = () => {
                     localStorage.setItem("user", null)
@@ -627,6 +611,11 @@
                 // register
                 .when("/danh-sach-san-pham", { templateUrl: "products/shop.html", controller: "shopControllers" })
 
+                // success payment
+                .when("/thanh-toan-thanh-cong", { templateUrl: "bills/success_payment.html", controller: "successPaymentController" })
+                .when("/thanh-toan-that-bai", { templateUrl: "bills/error_payment.html", controller: "errorPaymentController" })
+
+
                 // mặc định 
                 .otherwise({ redirectTo: "/trang-chu" })
         })
@@ -645,6 +634,8 @@
     <script src="assets/js/user/bill.js"></script>
     <script src="assets/js/user/changePass.js"></script>
     <script src="assets/js/product_detail/shop.js"></script>
+    <script src="assets/js/bill/success_payment.js"></script>
+    
 </body>
 
 

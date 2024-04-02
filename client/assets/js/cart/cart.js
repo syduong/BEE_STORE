@@ -8,6 +8,10 @@ clientApp.controller('cartController',
         $scope.customer = JSON.parse(localStorage.getItem("user"));
 
         $scope.loadDataProductDetail = () => {
+            document.querySelector("body").classList.remove('fix');
+            document.querySelector(".offcanvas-search-inner").classList.remove('show')
+            document.querySelector(".minicart-inner").classList.remove('show')
+            
             var id = $scope.customer == null ? -1 : $scope.customer.id
             $http.get('http://localhost:8080/cart/get-cart-detail-by-id/' + id).then(function (response) {
                 $scope.cartDetails = response.data
@@ -75,6 +79,16 @@ clientApp.controller('cartController',
         }
 
         $scope.plusQuantity = (cartDetail) => {
+            if(cartDetail.soLuong + 1 > 3){
+                toastr.error("Bạn không thể đặt 6 sản phẩm")
+                return;
+            }
+
+            if(cartDetail.idSanPhamChiTiet.soLuongTon < cartDetail.soLuong + 1){
+                toastr.error("Số lượng còn lại trong kho không đủ.Vui lòng chọn sản phẩm khác.")
+                return
+            }
+
             cartDetail.soLuong += 1
             $scope.addToCart(cartDetail)
         }
@@ -84,7 +98,7 @@ clientApp.controller('cartController',
             $http.post('http://localhost:8080/cart/add-to-cart', {
                 sanPhamChiTiet: cartDetail.idSanPhamChiTiet,
                 soLuong: cartDetail.soLuong,
-                idKhachHang: -1
+                idKhachHang: $scope.customer == null ? -1 : $scope.customer.id
             }).then(function (response) {
                 $scope.loadDataProductDetail();
                 toastr.options = {
@@ -110,6 +124,16 @@ clientApp.controller('cartController',
                 console.log(error)
             })
 
+        }
+
+        $scope.changeQuantity = (cartDetail) => {
+            if(cartDetail.soLuong > 3){
+               cartDetail.soLuong = 3
+            }
+
+            if(cartDetail.soLuong < 1){
+                cartDetail.soLuong = 1
+            }
         }
 
     });

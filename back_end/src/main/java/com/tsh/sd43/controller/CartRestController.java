@@ -25,7 +25,16 @@ public class CartRestController {
         try{
             return new ResponseEntity<>(cartService.addProductToCart(req), HttpStatus.OK);
         }catch (Exception ex){
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/add-to-cart-quantity")
+    public ResponseEntity<?> addToCartQuantity(@RequestBody CartDetailRequest req) {
+        try{
+            return new ResponseEntity<>(cartService.addProductToCartPlusQuantity(req), HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -33,6 +42,16 @@ public class CartRestController {
     public ResponseEntity<?> findCartDetailsByIdCart(@PathVariable("id") Long id) {
         try{
             return new ResponseEntity<>(cartService.findCartDetailsByIdCart(id), HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/get-cart-detail-by-id-cart")
+    public ResponseEntity<?> findCartDetailsByIdCartAndIdProductDetail(@RequestParam("id_customer") String idCustomer,
+                                                                       @RequestParam("id_product_detail") String idProductDetail) {
+        try{
+            return new ResponseEntity<>(cartService.findCartDetailsByIdCartAndProductDetail(Long.valueOf(idCustomer), Long.valueOf(idProductDetail)), HttpStatus.OK);
         }catch (Exception ex){
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }

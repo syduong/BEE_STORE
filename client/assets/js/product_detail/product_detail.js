@@ -23,11 +23,31 @@ clientApp.controller('singleProductController',
         $scope.itemsPerPageProductDetail = 100;
         $scope.quantity_of_cart = 1;
 
+        // cart detail
+        $scope.cartDetails = []
+
         $scope.loadSizes = () => {
             $http.get('http://localhost:8080/size/get-all')
                 .then(function (response) {
                     $scope.sizes = response.data
                 });
+
+            if ($scope.productChooseCurrent != null && $scope.productChooseCurrent != undefined ) {
+                if($scope.customer != null){
+                    $http.get('http://localhost:8080/cart/get-cart-detail-by-id-cart?id_customer=' + $scope.customer.id + '&id_product_detail=' + $scope.productChooseCurrent.id).then(response => {
+                        $scope.cartDetails = response.data
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                }else{
+                    $http.get('http://localhost:8080/cart/get-cart-detail-by-id-cart?id_customer=' + -1 + '&id_product_detail=' + $scope.productChooseCurrent.id).then(response => {
+                        $scope.cartDetails = response.data
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                }
+               
+            }
         }
 
         $scope.formatToVND = function (amount) {
@@ -39,7 +59,6 @@ clientApp.controller('singleProductController',
             return formatter.format(amount);
         }
 
-
         $scope.loadData = function () {
             var colorHtml = document.getElementById("color-product-detail")
             colorHtml.innerHTML = ""
@@ -47,7 +66,6 @@ clientApp.controller('singleProductController',
             $http.get('http://localhost:8080/product-detail/find-all-panigation?page=' + ($scope.currentPageProductDetail - 1) + '&size=' + $scope.itemsPerPageProductDetail + '&trang_thai=' + '&idSize=' + '&idColor=' + '&id=' + id,)
                 .then(function (response) {
                     $scope.productDetails = response.data.content
-                    console.log(response.data)
                     $scope.product = response.data.content[0].idSanPham
                     $scope.totalItemsProductDetail = response.data.totalElements
                 }).catch(function (error) {
@@ -86,12 +104,27 @@ clientApp.controller('singleProductController',
                 console.log(error)
             })
 
+            if ($scope.productChooseCurrent != null && $scope.productChooseCurrent != undefined) {
+                if($scope.customer != null){
+                    $http.get('http://localhost:8080/cart/get-cart-detail-by-id-cart?id_customer=' + $scope.customer.id + '&id_product_detail=' + $scope.productChooseCurrent.id).then(response => {
+                        $scope.cartDetails = response.data
+                    }).catch(error => {
+                        console.log(error)
+                    }) 
+                }else{
+                    $http.get('http://localhost:8080/cart/get-cart-detail-by-id-cart?id_customer=' + -1 + '&id_product_detail=' + $scope.productChooseCurrent.id).then(response => {
+                        $scope.cartDetails = response.data
+                    }).catch(error => {
+                        console.log(error)
+                    }) 
+                }
+                
+            }
 
         }
 
         $scope.getImageByProductId = function (id) {
             axios.get('http://localhost:8080/image/get-all/' + id).then(function (response) {
-                console.log(response)
                 return response.data[0].duongDan
             }).catch(function (error) {
                 console.log(error)
@@ -127,10 +160,23 @@ clientApp.controller('singleProductController',
 
             $scope.productDetailChooses = $scope.productDetails.filter(productDetail => productDetail.idMauSac.id === id)
             $scope.loadSizes()
+            console.log($scope.productDetailChooses)
 
             setTimeout(() => {
-                $scope.chooseSize($scope.productDetailChooses[0])
+                $scope.productDetailChooses.forEach((productDetail, index) => {
+                    if (productDetail.soLuongTon > 0) {
+                        $scope.chooseSize(productDetail)
+                        return
+                    }else{
+                        $scope.productChooseCurrent = productDetail
+                        return;
+                    }
+                })
             }, 10)
+
+            setTimeout(() => {
+                console.log($scope.productChooseCurrent)
+            }, 100)
         }
 
         $scope.chooseSize = (productDetail) => {
@@ -142,10 +188,9 @@ clientApp.controller('singleProductController',
             currentSize.classList.remove("size-product-detail")
 
             $scope.productChooseCurrent = productDetail
-            console.log($scope.productChooseCurrent)
             setTimeout(() => {
-                $scope.getAllImagesByIDProductDetail($scope.productChooseCurrent.id)
-            }, 10)
+                $scope.getAllImagesBecomeSlides($scope.productChooseCurrent.id, 'product')
+            }, 100)
         }
 
         $scope.getAllImagesByIDProductDetail = function (id) {
@@ -157,10 +202,95 @@ clientApp.controller('singleProductController',
             })
         }
 
+        $scope.getAllImagesBecomeSlides = function (id, text) {
+            var textFist = `
+            <div id="carousel-${id}" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                
+            `
+            var textCenter = ''
+            var textLast = `
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-${id}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel-${id}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            `
+            var html = document.getElementById("image-" + id)
+            if (text !== undefined) {
+                var html = document.getElementById("image-" + text + "-" + $scope.product.id)
+            }
+    
+            axios.get('http://localhost:8080/image/get-all/' + id).then(function (response) {
+                for (var i = 0; i < response.data.length; i++) {
+                    if (i == 0) {
+                        textCenter += `
+                            <div class="carousel-item active">
+                                <img src="${response.data[i].duongDan}" class="d-block w-100" alt="...">
+                            </div>`
+                    } else {
+                        textCenter += `
+                            <div class="carousel-item">
+                                <img src="${response.data[i].duongDan}" class="d-block w-100" alt="...">
+                            </div>`
+                    }
+    
+                }
+    
+                html.innerHTML = textFist + textCenter + textLast
+    
+            }).catch(function (error) {
+                console.log(error)
+            })
+        }
+    
         $scope.addToCart = () => {
-            console.log($scope.productChooseCurrent)
 
-            $http.post('http://localhost:8080/cart/add-to-cart', {
+            if ($scope.quantity_of_cart == 0) {
+                toastr.error("Vui lý chọn số lượng mua")
+                return
+            }
+
+            if($scope.quantity_of_cart < 0){
+                toastr.error("Số lượng sản phẩm phải lớn hơn 0")
+                return
+            }
+
+            if ($scope.cartDetails.length != 0) {
+                
+                if ($scope.quantity_of_cart + $scope.cartDetails[0].soLuong  > 6) {
+                    toastr.error("Bạn không thể đặt 6 sản phẩm")
+                    return
+                }
+
+                if ($scope.productChooseCurrent.soLuongTon < $scope.quantity_of_cart + $scope.cartDetails[0].soLuong) {
+                    toastr.error("Số lượng còn lại trong kho không đủ.Vui lòng chọn sản phẩm khác.")
+                    return
+                }
+            } else {
+                if ($scope.quantity_of_cart > 3) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Xin lỗi vì sự bất tiện này!!",
+                        text: "Bạn không thể đặt hàng quá 3 sản phẩm. Vui lòng liên hệ 0968686868 biết thêm chi tiết.",
+                        footer: '<a href="#">Why do I have this issue?</a>'
+                    });
+                    return
+                }
+
+                if ($scope.productChooseCurrent.soLuongTon < $scope.quantity_of_cart) {
+                    toastr.error("Số lượng còn lại trong kho không đủ.Vui lòng chọn sản phẩm khác.")
+                    return
+                }
+
+            }
+
+            $http.post('http://localhost:8080/cart/add-to-cart-quantity', {
                 sanPhamChiTiet: $scope.productChooseCurrent,
                 soLuong: $scope.quantity_of_cart == 1 ? -1 : $scope.quantity_of_cart,
                 idKhachHang: $scope.customer == null ? -1 : $scope.customer.id
@@ -186,24 +316,32 @@ clientApp.controller('singleProductController',
                 setTimeout(() => {
                     loadQuantityByIdProduct(-1)
                     $scope.showMiniCart()
+                    $scope.loadSizes()
+                    $scope.getAllImagesBecomeSlides($scope.productChooseCurrent.id, 'product')
                 }, 300)
 
             }).catch(function (error) {
-                console.log(error)
+                toastr.error("Đã có lỗi xảy ra vui lòng liên hệ quản trị viên.")
             })
 
         }
 
         $scope.minusQuantity = () => {
-            if ($scope.quantity_of_cart > 0) {
+            if ($scope.quantity_of_cart > 1) {
                 $scope.quantity_of_cart -= 1
             } else {
-                $scope.quantity_of_cart = 0
+                $scope.quantity_of_cart = 1
             }
         }
 
         $scope.plusQuantity = () => {
             $scope.quantity_of_cart += 1
+        }
+
+        $scope.changeQuantity = () => {
+            if ($scope.quantity_of_cart < 0) {
+                $scope.quantity_of_cart = 0
+            }
         }
 
         $scope.getAllImagesByIDProductDetailSwiper = function (id) {
@@ -213,6 +351,16 @@ clientApp.controller('singleProductController',
             }).catch(function (error) {
                 console.log(error)
             })
+        }
+
+        $scope.changeQuantity = (cartDetail) => {
+            if(cartDetail.soLuong > 3){
+               cartDetail.soLuong = 3
+            }
+
+            if(cartDetail.soLuong < 1){
+                cartDetail.soLuong = 1
+            }
         }
 
         $scope.loadData()

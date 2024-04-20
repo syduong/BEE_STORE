@@ -22,6 +22,9 @@ public class HoaDonChiTietSerImpl implements IHoaDonChiTietSer {
     @Autowired
     private IHoaDonChiTietRepo hoaDonChiTietRepo;
 
+    @Autowired
+    private ISanPhamChiTietRepo sanPhamChiTietRepo;
+
     public Page<HoaDonChiTiet> findProductDetailsByIdProduct(Integer pageNo, Integer pageSize, Long id) {
         try {
             Pageable pageable = PageRequest.of(pageNo, pageSize);

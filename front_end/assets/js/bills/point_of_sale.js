@@ -170,7 +170,7 @@ main_app.controller("pointOfSaleController", function ($scope, $http) {
 
     $scope.createOrderWait = function () {
         if ($scope.bills.length == 5) {
-            toastr.error("Bạn chỉ có thể tạo tạo tối đa 5 hóa đơn.")
+            toastr.error("  tạo tạo tối đa 5 hóa đơn.")
             return;
         }
 

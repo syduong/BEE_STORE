@@ -262,7 +262,6 @@ clientApp.controller('singleProductController',
             }
 
             if ($scope.cartDetails.length != 0) {
-                
                 if ($scope.quantity_of_cart + $scope.cartDetails[0].soLuong  > 6) {
                     toastr.error("Bạn chỉ có thể đặt 6 sản phẩm")
                     return

@@ -3,11 +3,13 @@ package com.tsh.sd43.service.impl;
 import com.tsh.sd43.entity.GioHang;
 import com.tsh.sd43.entity.GioHangChiTiet;
 import com.tsh.sd43.entity.HoaDonChiTiet;
+import com.tsh.sd43.entity.SanPhamChiTiet;
 import com.tsh.sd43.entity.request.CartDetailRequest;
 import com.tsh.sd43.entity.request.ProductDetailRequest;
 import com.tsh.sd43.repository.IGioHangChiTietRepo;
 import com.tsh.sd43.repository.IGioHangRepo;
 import com.tsh.sd43.repository.IKhachHangRepo;
+import com.tsh.sd43.repository.ISanPhamChiTietRepo;
 import com.tsh.sd43.service.IGioHangSer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,9 @@ public class GioHangSerImpl implements IGioHangSer {
 
     @Autowired
     private IKhachHangRepo khachHangRepo;
+
+    @Autowired
+    private ISanPhamChiTietRepo sanPhamChiTietRepo;
 
     public GioHang getCartByIdCustomer(Long id) {
         GioHang cart = new GioHang();
@@ -54,12 +59,12 @@ public class GioHangSerImpl implements IGioHangSer {
         GioHang cart = getCartByIdCustomer(req.getIdKhachHang());
         try {
             ArrayList<GioHangChiTiet> productDetails = gioHangChiTietRepo.findCartDetailsByIdCart(cart.getId());
-
+            SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepo.findById(req.getSanPhamChiTiet().getId()).orElseThrow();
             if(productDetails.size() == 0) {
                 GioHangChiTiet cartDetail = new GioHangChiTiet();
                 cartDetail.setIdGioHang(cart);
                 cartDetail.setIdSanPhamChiTiet(req.getSanPhamChiTiet());
-                if(req.getSoLuong() > req.getSanPhamChiTiet().getSoLuongTon()) {
+                if(req.getSoLuong() > sanPhamChiTiet.getSoLuongTon()) {
                     throw new RuntimeException("Số lượng còn lại không đủ");
                 }
                 cartDetail.setSoLuong(cartDetail.getSoLuong() == -1 ? 1 : cartDetail.getSoLuong());
@@ -69,14 +74,14 @@ public class GioHangSerImpl implements IGioHangSer {
                     if(item.getIdSanPhamChiTiet().getId().equals(req.getSanPhamChiTiet().getId())) {
 
                         if(req.getSoLuong() == -1) {
-                            if(item.getSoLuong() + 1 > req.getSanPhamChiTiet().getSoLuongTon()) {
+                            if(item.getSoLuong() + 1 > sanPhamChiTiet.getSoLuongTon()) {
                                 throw new RuntimeException("Số lượng còn lại không đủ");
                             }
 
                             item.setSoLuong(item.getSoLuong() + 1);
                             return gioHangChiTietRepo.save(item);
                         }else{
-                            if(req.getSanPhamChiTiet().getSoLuongTon() >= req.getSoLuong()) {
+                            if(sanPhamChiTiet.getSoLuongTon() >= req.getSoLuong()) {
                                 item.setSoLuong(req.getSoLuong());
                                 return gioHangChiTietRepo.save(item);
                             }else{
@@ -110,12 +115,13 @@ public class GioHangSerImpl implements IGioHangSer {
         GioHang cart = getCartByIdCustomer(req.getIdKhachHang());
         try {
             ArrayList<GioHangChiTiet> productDetails = gioHangChiTietRepo.findCartDetailsByIdCart(cart.getId());
+            SanPhamChiTiet sanPhamChiTiet = sanPhamChiTietRepo.findById(req.getSanPhamChiTiet().getId()).orElseThrow();
 
             if(productDetails.size() == 0) {
                 GioHangChiTiet cartDetail = new GioHangChiTiet();
                 cartDetail.setIdGioHang(cart);
                 cartDetail.setIdSanPhamChiTiet(req.getSanPhamChiTiet());
-                if(req.getSoLuong() > req.getSanPhamChiTiet().getSoLuongTon()) {
+                if(req.getSoLuong() > sanPhamChiTiet.getSoLuongTon()) {
                     throw new RuntimeException("Số lượng còn lại không đủ");
                 }
                 cartDetail.setSoLuong(req.getSoLuong() == -1 ? 1 : req.getSoLuong());
@@ -125,7 +131,7 @@ public class GioHangSerImpl implements IGioHangSer {
                     if(item.getIdSanPhamChiTiet().getId().equals(req.getSanPhamChiTiet().getId())) {
 
                         if(req.getSoLuong() == -1) {
-                            if(item.getSoLuong() + 1 > req.getSanPhamChiTiet().getSoLuongTon()) {
+                            if(item.getSoLuong() + 1 > sanPhamChiTiet.getSoLuongTon()) {
                                 throw new RuntimeException("Số lượng còn lại không đủ");
                             }
 
@@ -133,7 +139,7 @@ public class GioHangSerImpl implements IGioHangSer {
                             return gioHangChiTietRepo.save(item);
                         }else{
                             Integer quantityCart = item.getSoLuong() == null ? 0 : item.getSoLuong();
-                            if( quantityCart + req.getSoLuong() >= req.getSanPhamChiTiet().getSoLuongTon()) {
+                            if( quantityCart + req.getSoLuong() >= sanPhamChiTiet.getSoLuongTon()) {
                                 item.setSoLuong(req.getSoLuong() + quantityCart);
                                 return gioHangChiTietRepo.save(item);
                             }else{

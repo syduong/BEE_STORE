@@ -79,7 +79,7 @@ clientApp.controller('cartController',
         }
 
         $scope.plusQuantity = (cartDetail) => {
-            if(cartDetail.soLuong + 1 > 3){
+            if(cartDetail.soLuong + 1 > 6){
                 toastr.error("Bạn không thể đặt 6 sản phẩm")
                 return;
             }
